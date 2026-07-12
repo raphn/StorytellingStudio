@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://0ajwjcg6myss"]
+
+[node name="SceneFramedThumnail" type="PanelContainer" unique_id=210148995]
+editor_description = "Link between a scene and a frame"
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="." unique_id=435539785]
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"InfoLabel"
+text = "<no scene>"
+horizontal_alignment = 1
+vertical_alignment = 1

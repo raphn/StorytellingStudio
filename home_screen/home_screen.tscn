@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://cdi4fhpqo0h2l"]
+
+[ext_resource type="Script" uid="uid://do3srpw3vdik0" path="res://home_screen/home_screen.gd" id="1_vv65u"]
+[ext_resource type="Script" uid="uid://3t1fkf8aj81d" path="res://src/proportional_center_container.gd" id="2_7xfdr"]
+[ext_resource type="Texture2D" uid="uid://c6mvpqc5fla2u" path="res://_project/banner - version 1.0.png" id="3_1xcb2"]
+[ext_resource type="StyleBox" uid="uid://ul1ss7b4h64h" path="res://home_screen/res/line_edit_norm.stylebox" id="4_s15jv"]
+[ext_resource type="FontFile" uid="uid://b0qvvk7hd7an1" path="res://_project/fonts/Bangers-Regular.ttf" id="4_w5rl6"]
+[ext_resource type="StyleBox" uid="uid://csqdnl2d5ku6l" path="res://home_screen/res/create_btn.stylebox" id="6_8iqtw"]
+[ext_resource type="StyleBox" uid="uid://bbew8mj71cvcp" path="res://home_screen/res/line_edit_focus.stylebox" id="6_y781g"]
+[ext_resource type="StyleBox" uid="uid://b7pk02y7x2f7p" path="res://home_screen/res/create_btn_pressed.stylebox" id="7_glaj2"]
+[ext_resource type="StyleBox" uid="uid://52140pl3u6ut" path="res://home_screen/res/create_btn_hover.stylebox" id="8_rnynh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xcb2"]
+bg_color = Color(0.103743516, 0.103743546, 0.10374347, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s15jv"]
+draw_center = false
+shadow_color = Color(0, 0, 0, 0.40392157)
+shadow_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_s15jv"]
+font = ExtResource("4_w5rl6")
+font_size = 18
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 12
+shadow_color = Color(0, 0, 0, 0.08235294)
+stacked_outline_count = 1
+stacked_outline_0/size = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_8iqtw"]
+font = ExtResource("4_w5rl6")
+font_size = 60
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 36
+shadow_color = Color(0, 0, 0, 0.08235294)
+stacked_outline_count = 1
+stacked_outline_0/size = 9
+
+[node name="HomeScreen" type="PanelContainer" unique_id=2123105289 node_paths=PackedStringArray("new_proj_name", "create_btn", "pickers_root", "last_opened_separator", "last_opened_container")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1xcb2")
+script = ExtResource("1_vv65u")
+new_proj_name = NodePath("ProportionalCenterContainer/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/LineEdit")
+create_btn = NodePath("ProportionalCenterContainer/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/CreateButton")
+pickers_root = NodePath("ProportionalCenterContainer/PanelContainer/VBoxContainer/ScrollContainer/MarginContainer/ProjectListRoot")
+last_opened_separator = NodePath("ProportionalCenterContainer/PanelContainer/VBoxContainer/LastOpenedHSeparator")
+last_opened_container = NodePath("ProportionalCenterContainer/PanelContainer/VBoxContainer/LastOpened")
+
+[node name="ProportionalCenterContainer" type="Container" parent="." unique_id=66833785]
+layout_mode = 2
+script = ExtResource("2_7xfdr")
+horizontal_fill = 0.8
+vertical_fill = 0.7
+metadata/_custom_type_script = "uid://3t1fkf8aj81d"
+
+[node name="PanelContainer" type="PanelContainer" parent="ProportionalCenterContainer" unique_id=1620434896]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_s15jv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProportionalCenterContainer/PanelContainer" unique_id=1540534184]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer" unique_id=1663658104]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/PanelContainer" unique_id=1575053476]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_1xcb2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/PanelContainer" unique_id=1532446886]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=1238674431]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Version 1.0"
+label_settings = SubResource("LabelSettings_s15jv")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=1999136872]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Frame forge"
+label_settings = SubResource("LabelSettings_8iqtw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer" unique_id=2093443640]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/MarginContainer" unique_id=46036577]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1119511376]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("4_s15jv")
+theme_override_styles/focus = ExtResource("6_y781g")
+placeholder_text = "New Project Name"
+clear_button_enabled = true
+select_all_on_focus = true
+
+[node name="VSeparator" type="VSeparator" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=378143491]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="CreateButton" type="Button" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=519243413]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.9411765, 0.94509804, 0.9647059, 1)
+theme_override_styles/normal = ExtResource("6_8iqtw")
+theme_override_styles/pressed = ExtResource("7_glaj2")
+theme_override_styles/hover = ExtResource("8_rnynh")
+theme_override_styles/focus = ExtResource("8_rnynh")
+text = "Create"
+
+[node name="LastOpenedHSeparator" type="HSeparator" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer" unique_id=343154579]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LastOpened" type="PanelContainer" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer" unique_id=1912228405]
+visible = false
+layout_mode = 2
+theme_type_variation = &"CleanPanel"
+
+[node name="ProjListHSeparator" type="HSeparator" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer" unique_id=24903904]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer" unique_id=1513252561]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/ScrollContainer" unique_id=1130437315]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="ProjectListRoot" type="VBoxContainer" parent="ProportionalCenterContainer/PanelContainer/VBoxContainer/ScrollContainer/MarginContainer" unique_id=1353671901]
+layout_mode = 2
+theme_override_constants/separation = 12

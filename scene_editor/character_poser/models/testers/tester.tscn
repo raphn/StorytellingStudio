@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://ugptdhs2dfdg"]
+
+[ext_resource type="ArrayMesh" path="res://models/testers/char_ground.obj" id="1_hu3yk"]
+[ext_resource type="Material" path="res://models/materials/head.material" id="2_opj42"]
+[ext_resource type="ArrayMesh" path="res://models/testers/eyes.obj" id="3_q5ywc"]
+[ext_resource type="Shader" path="res://models/shaders/stroke.gdshader" id="4_6hyys"]
+[ext_resource type="ArrayMesh" path="res://models/testers/head.obj" id="5_13f4p"]
+[ext_resource type="Material" path="res://models/materials/body.material" id="6_ln4w1"]
+[ext_resource type="ArrayMesh" path="res://models/testers/joints.obj" id="7_wct5t"]
+[ext_resource type="Material" path="res://models/materials/joints.material" id="8_tobb8"]
+[ext_resource type="ArrayMesh" path="res://models/testers/members.obj" id="9_fbf56"]
+[ext_resource type="ArrayMesh" path="res://models/testers/mouth.obj" id="10_xfm06"]
+[ext_resource type="ArrayMesh" path="res://models/testers/head_guide_lines.obj" id="11_6guiv"]
+[ext_resource type="Material" path="res://models/materials/black_line.material" id="12_0jjgw"]
+[ext_resource type="ArrayMesh" path="res://models/testers/head_guide_lines_001.obj" id="13_jvk2v"]
+[ext_resource type="ArrayMesh" path="res://models/testers/head_guide_lines_002.obj" id="14_hhuxe"]
+[ext_resource type="ArrayMesh" path="res://models/testers/head_simple.obj" id="15_pkuem"]
+[ext_resource type="ArrayMesh" path="res://models/testers/body_lines.obj" id="16_1axkt"]
+[ext_resource type="ArrayMesh" path="res://models/testers/members_lines.obj" id="17_b53qm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2iky0"]
+render_priority = 0
+shader = ExtResource("4_6hyys")
+shader_parameter/base_color = Color(0.8, 0.75, 0.65, 1)
+shader_parameter/stroke_color = Color(0.04, 0.03, 0.02, 1)
+shader_parameter/stroke_width = 0.025
+shader_parameter/stroke_softness = 0.018
+shader_parameter/stroke_strength = 1.0
+shader_parameter/wobble_strength = 0.025
+shader_parameter/wobble_scale = 35.0
+shader_parameter/broken_stroke_amount = 0.25
+shader_parameter/broken_stroke_scale = 18.0
+
+[node name="Node3D" type="Node3D" unique_id=1313666721]
+
+[node name="CharGround" type="MeshInstance3D" parent="." unique_id=480141757]
+mesh = ExtResource("1_hu3yk")
+surface_material_override/0 = ExtResource("2_opj42")
+
+[node name="Eyes" type="MeshInstance3D" parent="." unique_id=1629910692]
+visible = false
+mesh = ExtResource("3_q5ywc")
+surface_material_override/0 = SubResource("ShaderMaterial_2iky0")
+
+[node name="Head" type="MeshInstance3D" parent="." unique_id=614132385]
+visible = false
+mesh = ExtResource("5_13f4p")
+surface_material_override/0 = ExtResource("6_ln4w1")
+
+[node name="Joints" type="MeshInstance3D" parent="." unique_id=929877124]
+mesh = ExtResource("7_wct5t")
+surface_material_override/0 = ExtResource("8_tobb8")
+
+[node name="Members" type="MeshInstance3D" parent="." unique_id=1184385800]
+visible = false
+mesh = ExtResource("9_fbf56")
+surface_material_override/0 = ExtResource("6_ln4w1")
+
+[node name="Mouth" type="MeshInstance3D" parent="." unique_id=1715896353]
+visible = false
+mesh = ExtResource("10_xfm06")
+surface_material_override/0 = SubResource("ShaderMaterial_2iky0")
+
+[node name="HeadGuideLines" type="MeshInstance3D" parent="." unique_id=1651588105]
+mesh = ExtResource("11_6guiv")
+surface_material_override/0 = ExtResource("12_0jjgw")
+
+[node name="HeadGuideLines001" type="MeshInstance3D" parent="." unique_id=401757281]
+mesh = ExtResource("13_jvk2v")
+surface_material_override/0 = ExtResource("12_0jjgw")
+
+[node name="HeadGuideLines002" type="MeshInstance3D" parent="." unique_id=243874932]
+mesh = ExtResource("14_hhuxe")
+surface_material_override/0 = ExtResource("12_0jjgw")
+
+[node name="HeadSimple" type="MeshInstance3D" parent="." unique_id=282884451]
+mesh = ExtResource("15_pkuem")
+surface_material_override/0 = ExtResource("6_ln4w1")
+
+[node name="BodyLines" type="MeshInstance3D" parent="." unique_id=1850877124]
+mesh = ExtResource("16_1axkt")
+surface_material_override/0 = ExtResource("6_ln4w1")
+surface_material_override/1 = ExtResource("12_0jjgw")
+
+[node name="MembersLines" type="MeshInstance3D" parent="." unique_id=1278427703]
+mesh = ExtResource("17_b53qm")
+surface_material_override/0 = ExtResource("6_ln4w1")
+surface_material_override/1 = ExtResource("12_0jjgw")

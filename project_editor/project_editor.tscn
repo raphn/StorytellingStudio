@@ -1,0 +1,480 @@
+[gd_scene format=3 uid="uid://b5vbirvobwqec"]
+
+[ext_resource type="PackedScene" uid="uid://d3gno30gyv622" path="res://project_editor/print_settings_editor/print_settings_editor.tscn" id="1_q652a"]
+[ext_resource type="Script" uid="uid://bjb54tjihmebe" path="res://project_editor/project_editor.gd" id="1_qe61q"]
+[ext_resource type="Script" uid="uid://3aqfbu05xgq" path="res://project_editor/src/graph_edit.gd" id="2_fjaqj"]
+[ext_resource type="Script" uid="uid://b04p2ixtkqmy7" path="res://project_editor/src/page_panel.gd" id="3_e8a4r"]
+[ext_resource type="Texture2D" uid="uid://cpc114llcu7nn" path="res://graphs/draw dotted box.png" id="3_iogwg"]
+[ext_resource type="PackedScene" uid="uid://drrwkqgx1wi6y" path="res://project_editor/mesh_graph_element/scn/floating_toolbar.tscn" id="4_2i0ud"]
+[ext_resource type="Script" uid="uid://c6065j5trmhgg" path="res://project_editor/src/draw_mode_button.gd" id="4_451hw"]
+[ext_resource type="Texture2D" uid="uid://cqsh452vrvsaf" path="res://graphs/zoom.png" id="6_6ciyd"]
+[ext_resource type="Texture2D" uid="uid://ldlwp2qyyhgq" path="res://graphs/page_layouts/layout1.png" id="7_a0sbo"]
+[ext_resource type="Texture2D" uid="uid://bnkl3wdd8x4ig" path="res://graphs/page_layouts/layout2.png" id="8_i2wqx"]
+[ext_resource type="Script" uid="uid://bwf2f11itpjg3" path="res://src/mobile_debug.gd" id="8_vgn7x"]
+[ext_resource type="Texture2D" uid="uid://jn1s6o5fyco6" path="res://graphs/page_layouts/layout3.png" id="9_2i0ud"]
+[ext_resource type="FontFile" uid="uid://b0qvvk7hd7an1" path="res://_project/fonts/Bangers-Regular.ttf" id="9_xc0si"]
+[ext_resource type="Texture2D" uid="uid://dgh3yqufiu68q" path="res://graphs/drop_arrow.png" id="9_ynxaj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58rt0"]
+bg_color = Color(0.1342, 0.14992999, 0.22, 0.5882353)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.38431373, 0.4, 0.8509804, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 2
+shadow_size = 3
+shadow_offset = Vector2(-0.775, 2.565)
+
+[sub_resource type="FontVariation" id="FontVariation_58rt0"]
+base_font = ExtResource("9_xc0si")
+spacing_glyph = 4
+spacing_space = 6
+spacing_top = -2
+
+[sub_resource type="LabelSettings" id="LabelSettings_58rt0"]
+font = SubResource("FontVariation_58rt0")
+font_size = 20
+font_color = Color(0.22352941, 0.6627451, 0.8392157, 1)
+outline_color = Color(0.30980393, 0.3254902, 0.7411765, 1)
+shadow_color = Color(0.22679998, 0.66626, 0.84, 0.4)
+stacked_outline_count = 1
+stacked_outline_0/size = 8
+stacked_outline_0/color = Color(0.1092, 0.11422666, 0.26, 1)
+
+[node name="ProjectEditor" type="Control" unique_id=352194153 node_paths=PackedStringArray("notif_bar", "home_btn", "recenter_btn", "save_timer", "no_scene_sigh", "scenes_scroll", "scenes_root", "add_scene_btn", "graph", "left_page", "right_page", "left_page_container", "right_page_container", "flip_back_btn", "flip_forward_btn", "add_forward_btn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qe61q")
+notif_bar = NodePath("MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/NotificationBar")
+home_btn = NodePath("MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HomeButton")
+recenter_btn = NodePath("MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/RecenterButton")
+save_timer = NodePath("MainContainer/SaveTimer")
+no_scene_sigh = NodePath("MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer/NoScenesSign")
+scenes_scroll = NodePath("MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer/ScenesScrollContainer")
+scenes_root = NodePath("MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer/ScenesScrollContainer/ScenePickersRoot")
+add_scene_btn = NodePath("MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer/AddSceneButton")
+graph = NodePath("MainContainer/MarginContainer/VBoxContainer/GraphEdit")
+left_page = NodePath("MainContainer/MarginContainer/VBoxContainer/GraphEdit/LeftPage/LPagePanel")
+right_page = NodePath("MainContainer/MarginContainer/VBoxContainer/GraphEdit/RightPage/RPagePanel")
+left_page_container = NodePath("MainContainer/MarginContainer/VBoxContainer/GraphEdit/LeftPage")
+right_page_container = NodePath("MainContainer/MarginContainer/VBoxContainer/GraphEdit/RightPage")
+flip_back_btn = NodePath("MainContainer/MarginContainer/VBoxContainer/GraphEdit/FlipBack/Button")
+flip_forward_btn = NodePath("MainContainer/MarginContainer/VBoxContainer/GraphEdit/FlipForward/Button")
+add_forward_btn = NodePath("MainContainer/MarginContainer/VBoxContainer/GraphEdit/AddPage/Button")
+
+[node name="MainContainer" type="PanelContainer" parent="." unique_id=1685494069]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer" unique_id=1331777545]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/MarginContainer" unique_id=2001573695]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MainContainer/MarginContainer/VBoxContainer" unique_id=552278039]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer" unique_id=1246579108]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=148734346]
+layout_mode = 2
+
+[node name="safe_zone" type="Control" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=726934501]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1278936568]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NotificationBar" type="RichTextLabel" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1413957615]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
+theme_override_font_sizes/bold_italics_font_size = 22
+theme_override_font_sizes/italics_font_size = 22
+theme_override_font_sizes/mono_font_size = 22
+bbcode_enabled = true
+text = "Scene opened: [color=orange]Scene[/color]"
+autowrap_mode = 0
+
+[node name="DrawingFeedback" type="TextureRect" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1442586734]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("3_iogwg")
+expand_mode = 1
+
+[node name="RecenterButton" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=442616679]
+layout_mode = 2
+theme_type_variation = &"ActionButton"
+text = "Recenter"
+
+[node name="HomeButton" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1272285538]
+layout_mode = 2
+theme_type_variation = &"ActionButton"
+text = "<-Home"
+
+[node name="GraphEdit" type="GraphEdit" parent="MainContainer/MarginContainer/VBoxContainer" unique_id=1985515512 node_paths=PackedStringArray("floating_toolbar", "zoom_slider")]
+layout_mode = 2
+size_flags_vertical = 3
+minimap_enabled = false
+minimap_size = Vector2(180, 120)
+show_menu = false
+show_grid_buttons = false
+show_minimap_button = false
+show_arrange_button = false
+script = ExtResource("2_fjaqj")
+floating_toolbar = NodePath("FloatingToolbar")
+zoom_slider = NodePath("ZoomContainer/MarginContainer/VBoxContainer/ZoomVSlider")
+
+[node name="RightPage" type="GraphElement" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=189571889]
+layout_mode = 0
+offset_right = 521.0
+offset_bottom = 832.0
+draggable = false
+selectable = false
+
+[node name="RPagePanel" type="PanelContainer" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/RightPage" unique_id=2103801233 node_paths=PackedStringArray("controller", "graph", "page_num_display", "debug")]
+layout_mode = 2
+theme_type_variation = &"RightPagePanelFx"
+script = ExtResource("3_e8a4r")
+controller = NodePath("../../../../../..")
+graph = NodePath("../..")
+page_num_display = NodePath("../RPageLabel")
+debug = NodePath("../../../MobileDebug")
+
+[node name="RPageLabel" type="Label" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/RightPage" unique_id=1474006342]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0, 0, 0, 0.48235294)
+text = "Page #"
+
+[node name="LeftPage" type="GraphElement" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=1037554053]
+layout_mode = 0
+offset_left = -520.0
+offset_right = 1.0
+offset_bottom = 832.0
+position_offset = Vector2(-520, 0)
+draggable = false
+selectable = false
+
+[node name="LPagePanel" type="PanelContainer" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/LeftPage" unique_id=102892292 node_paths=PackedStringArray("controller", "graph", "page_num_display", "debug")]
+layout_mode = 2
+theme_type_variation = &"LeftPanelPageFx"
+script = ExtResource("3_e8a4r")
+controller = NodePath("../../../../../..")
+graph = NodePath("../..")
+page_num_display = NodePath("../LPageLabel")
+debug = NodePath("../../../MobileDebug")
+
+[node name="LPageLabel" type="Label" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/LeftPage" unique_id=1549879498]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0, 0, 0, 0.48235294)
+text = "Page #"
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=2069375216]
+z_index = 2
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = -19.5
+offset_right = -43.0
+offset_bottom = 20.5
+grow_horizontal = 0
+grow_vertical = 2
+action_left = &"pan_left"
+action_right = &"pan_right"
+action_up = &"pan_up"
+action_down = &"pan_down"
+
+[node name="FloatingToolbar" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=530425593 instance=ExtResource("4_2i0ud")]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 3591.9995
+offset_bottom = 3316.0
+
+[node name="FlipForward" type="GraphElement" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=1742251937]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 280.0
+offset_right = 688.0001
+offset_bottom = 408.0
+position_offset = Vector2(560, 280)
+draggable = false
+selectable = false
+
+[node name="Button" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/FlipForward" unique_id=176559016]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme_type_variation = &"BigButton"
+text = "Flip"
+
+[node name="AddPage" type="GraphElement" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=758073075]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 120.0
+offset_right = 688.0001
+offset_bottom = 248.0
+position_offset = Vector2(560, 120)
+draggable = false
+selectable = false
+
+[node name="Button" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/AddPage" unique_id=1285922769]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme_type_variation = &"BigButton"
+text = "Add"
+
+[node name="FlipBack" type="GraphElement" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=1144809850]
+layout_mode = 0
+offset_left = -560.0
+offset_top = 280.0
+offset_right = -431.99988
+offset_bottom = 408.0
+position_offset = Vector2(-560, 280)
+draggable = false
+selectable = false
+
+[node name="Button" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/FlipBack" unique_id=623115003]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme_type_variation = &"BigButton"
+text = "Flip"
+
+[node name="ZoomContainer" type="PanelContainer" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=641839791]
+z_index = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -78.0
+offset_top = 12.0
+offset_right = -34.0
+offset_bottom = 363.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_58rt0")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/ZoomContainer" unique_id=497996713]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/ZoomContainer/MarginContainer" unique_id=1516427972]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/ZoomContainer/MarginContainer/VBoxContainer" unique_id=582604408]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("6_6ciyd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ZoomVSlider" type="VSlider" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit/ZoomContainer/MarginContainer/VBoxContainer" unique_id=1923209480]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+min_value = 0.2
+max_value = 2.1
+step = 0.01
+value = 1.0
+
+[node name="ToolsFoldable" type="FoldableContainer" parent="MainContainer/MarginContainer/VBoxContainer" unique_id=1786005098]
+layout_mode = 2
+title = "Tools"
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable" unique_id=1953299093]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer" unique_id=134417733]
+layout_mode = 2
+
+[node name="EditingFoldable" type="FoldableContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer" unique_id=1063616177]
+layout_mode = 2
+folded = true
+title = "Editing"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/EditingFoldable" unique_id=2119264905]
+visible = false
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/EditingFoldable/ScrollContainer" unique_id=388641149]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/EditingFoldable/ScrollContainer/MarginContainer" unique_id=37158292]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DrawModeButton" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/EditingFoldable/ScrollContainer/MarginContainer/HBoxContainer" unique_id=308192669 node_paths=PackedStringArray("feedback")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_type_variation = &"ToolButton"
+toggle_mode = true
+icon = ExtResource("3_iogwg")
+expand_icon = true
+script = ExtResource("4_451hw")
+feedback = NodePath("../../../../../../../../PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DrawingFeedback")
+
+[node name="ScenesFoldable" type="FoldableContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer" unique_id=602118289]
+layout_mode = 2
+title = "Scenes"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable" unique_id=1909998578]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ScenesScrollContainer" type="ScrollContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer" unique_id=1043064953]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="ScenePickersRoot" type="HBoxContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer/ScenesScrollContainer" unique_id=231547788]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NoScenesSign" type="Label" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer" unique_id=684194062]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "No scenes yet! Start HERE ->"
+label_settings = SubResource("LabelSettings_58rt0")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AddSceneButton" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer" unique_id=811772932]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"ActionButton"
+text = "New"
+
+[node name="SettingsFoldable" type="FoldableContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer" unique_id=1801007548]
+custom_maximum_size = Vector2(-1, 256)
+layout_mode = 2
+folded = true
+title = "Options"
+
+[node name="PrintSettingsEditor" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/SettingsFoldable" unique_id=968486038 instance=ExtResource("1_q652a")]
+visible = false
+layout_mode = 2
+
+[node name="MobileDebug" type="FoldableContainer" parent="MainContainer/MarginContainer/VBoxContainer" unique_id=1099880917 node_paths=PackedStringArray("label", "copy_btn")]
+visible = false
+layout_mode = 2
+folded = true
+title = "Debug"
+script = ExtResource("8_vgn7x")
+label = NodePath("VBoxContainer/Label")
+copy_btn = NodePath("VBoxContainer/Button")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/MarginContainer/VBoxContainer/MobileDebug" unique_id=962184454]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainContainer/MarginContainer/VBoxContainer/MobileDebug/VBoxContainer" unique_id=487126855]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_alignment = 2
+autowrap_mode = 2
+max_lines_visible = 30
+
+[node name="Button" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/MobileDebug/VBoxContainer" unique_id=106859757]
+layout_mode = 2
+text = "copy"
+
+[node name="SaveTimer" type="Timer" parent="MainContainer" unique_id=1703339914]
+wait_time = 2.0
+one_shot = true
+
+[node name="PageLayouts" type="FoldableContainer" parent="." unique_id=1338800314]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -97.0
+offset_top = 87.0
+offset_right = -20.0
+offset_bottom = 360.0
+grow_horizontal = 0
+title = "LAYOUTS"
+title_text_overrun_behavior = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="PageLayouts" unique_id=620238763]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PageLayouts/PanelContainer" unique_id=2118089507]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PageLayouts/PanelContainer/MarginContainer" unique_id=2018580234]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PageLayouts/PanelContainer/MarginContainer/ScrollContainer" unique_id=968422918]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="PageLayouts/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1572969575]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 6
+texture = ExtResource("7_a0sbo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="PageLayouts/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/TextureRect" unique_id=1750000980]
+modulate = Color(1, 1, 1, 0.39215687)
+top_level = true
+layout_mode = 0
+offset_left = 539.0
+offset_top = 97.0
+offset_right = 579.0
+offset_bottom = 137.0
+texture = ExtResource("9_ynxaj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="PageLayouts/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=967690042]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("8_i2wqx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="PageLayouts/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=366711901]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("9_2i0ud")
+expand_mode = 1
+stretch_mode = 5

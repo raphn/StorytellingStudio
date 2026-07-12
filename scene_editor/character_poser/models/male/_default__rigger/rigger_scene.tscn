@@ -1,0 +1,192 @@
+[gd_scene format=3 uid="uid://celikaodxm83i"]
+
+[ext_resource type="PackedScene" uid="uid://d02ksw6ph56gq" path="res://scene_editor/character_poser/models/male/_default__rigger/rigger.glb" id="1_0cnh1"]
+[ext_resource type="Script" uid="uid://dvgherax36wjr" path="res://scene_editor/character_poser/src/character_poser.gd" id="1_nwbxx"]
+[ext_resource type="Material" uid="uid://b3ifqupk8m1nn" path="res://scene_editor/character_poser/models/materials/body.material" id="2_labkg"]
+[ext_resource type="Material" uid="uid://eye2dh1gpwtm" path="res://scene_editor/character_poser/models/materials/black_line.material" id="3_200k4"]
+[ext_resource type="Material" uid="uid://dehum7qrxyx6g" path="res://scene_editor/character_poser/models/materials/joints.material" id="4_es6ys"]
+[ext_resource type="PackedScene" uid="uid://dkcpejawhmokj" path="res://scene_editor/handles/transform_handle_3d.tscn" id="6_ldpfh"]
+[ext_resource type="Script" uid="uid://df7ihxsaqp7nm" path="res://scene_editor/handles/transform_handle_3d.gd" id="7_31yu2"]
+
+[sub_resource type="Animation" id="Animation_31yu2"]
+resource_name = "new_animation"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sie3q"]
+_data = {
+&"new_animation": SubResource("Animation_31yu2")
+}
+
+[node name="CharacterRoot" type="Node3D" unique_id=858638182 node_paths=PackedStringArray("human_rig", "controllers")]
+script = ExtResource("1_nwbxx")
+human_rig = NodePath("HumanRig")
+controllers = [NodePath("HumanRig/Arms/L_Arm_IK"), NodePath("HumanRig/Arms/L_Arm_Pole")]
+
+[node name="male" parent="." unique_id=1121191155 instance=ExtResource("1_0cnh1")]
+
+[node name="body_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="0" unique_id=311206312]
+surface_material_override/0 = ExtResource("2_labkg")
+surface_material_override/1 = ExtResource("3_200k4")
+
+[node name="char_ground" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="1" unique_id=156534880]
+surface_material_override/0 = ExtResource("2_labkg")
+surface_material_override/1 = ExtResource("3_200k4")
+
+[node name="head_simple" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="2" unique_id=1063079597]
+surface_material_override/0 = ExtResource("2_labkg")
+
+[node name="head_guide_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="3" unique_id=97814688]
+surface_material_override/0 = ExtResource("3_200k4")
+
+[node name="head_guide_lines_001" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="4" unique_id=1910041338]
+surface_material_override/0 = ExtResource("3_200k4")
+
+[node name="head_guide_lines_002" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="5" unique_id=2133505521]
+surface_material_override/0 = ExtResource("3_200k4")
+
+[node name="joints" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="6" unique_id=181806449]
+surface_material_override/0 = ExtResource("4_es6ys")
+
+[node name="members_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="7" unique_id=802029003]
+surface_material_override/0 = ExtResource("2_labkg")
+surface_material_override/1 = ExtResource("3_200k4")
+
+[node name="L_ARM_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="8" unique_id=293573071]
+setting_count = 1
+settings/0/target_node = NodePath("../../../../HumanRig/Arms/L_Arm_IK")
+settings/0/pole_node = NodePath("../../../../HumanRig/Arms/L_Arm_Pole")
+settings/0/root_bone_name = "arm.l"
+settings/0/root_bone = 5
+settings/0/middle_bone_name = "forearm.l"
+settings/0/middle_bone = 6
+settings/0/pole_direction = 0
+settings/0/end_bone_name = "hand.l"
+settings/0/end_bone = 7
+settings/0/use_virtual_end = false
+settings/0/extend_end_bone = false
+
+[node name="R_ARM_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="9" unique_id=1980357039]
+setting_count = 1
+settings/0/target_node = NodePath("../../../../HumanRig/Arms/R_Arm_IK")
+settings/0/pole_node = NodePath("../../../../HumanRig/Arms/R_Arm_Pole")
+settings/0/root_bone_name = "arm.r"
+settings/0/root_bone = 23
+settings/0/middle_bone_name = "forearm.r"
+settings/0/middle_bone = 24
+settings/0/pole_direction = 0
+settings/0/end_bone_name = "hand.r"
+settings/0/end_bone = 25
+settings/0/use_virtual_end = false
+settings/0/extend_end_bone = false
+
+[node name="L_LEG_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="10" unique_id=1743083230]
+setting_count = 1
+settings/0/target_node = NodePath("../../../../HumanRig/Legs/L_Leg_IK")
+settings/0/pole_node = NodePath("../../../../HumanRig/Legs/L_Leg_Pole")
+settings/0/root_bone_name = "leg.l"
+settings/0/root_bone = 41
+settings/0/middle_bone_name = "shin.l"
+settings/0/middle_bone = 42
+settings/0/pole_direction = 0
+settings/0/end_bone_name = "foot.l"
+settings/0/end_bone = 43
+settings/0/use_virtual_end = false
+settings/0/extend_end_bone = false
+
+[node name="R_LEG_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="11" unique_id=477348763]
+setting_count = 1
+settings/0/target_node = NodePath("../../../../HumanRig/Legs/R_Leg_IK")
+settings/0/pole_node = NodePath("../../../../HumanRig/Legs/R_Leg_Pole")
+settings/0/root_bone_name = "leg.r"
+settings/0/root_bone = 45
+settings/0/middle_bone_name = "shin.r"
+settings/0/middle_bone = 46
+settings/0/pole_direction = 0
+settings/0/end_bone_name = "foot.r"
+settings/0/end_bone = 47
+settings/0/use_virtual_end = false
+settings/0/extend_end_bone = false
+
+[node name="HumanRig" type="Marker3D" parent="." unique_id=794504470]
+
+[node name="Arms" type="Marker3D" parent="HumanRig" unique_id=657529713]
+
+[node name="L_Arm_IK" parent="HumanRig/Arms" unique_id=891015074 instance=ExtResource("6_ldpfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45148098, 1.2519255, -0.17171967)
+render_layers = 2
+show_rotate_handles = false
+show_scale_handles = false
+locked_rotation_axes = 7
+locked_scale_axes = 7
+
+[node name="L_Arm_Pole" type="Marker3D" parent="HumanRig/Arms" unique_id=381188650]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35237682, 1.1028407, -0.87793136)
+script = ExtResource("7_31yu2")
+render_layers = 2
+show_rotate_handles = false
+show_scale_handles = false
+locked_rotation_axes = 7
+locked_scale_axes = 7
+handle_length = 0.7
+metadata/_custom_type_script = "uid://df7ihxsaqp7nm"
+
+[node name="R_Arm_IK" parent="HumanRig/Arms" unique_id=250667155 instance=ExtResource("6_ldpfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.451, 1.252, -0.172)
+render_layers = 2
+show_rotate_handles = false
+show_scale_handles = false
+locked_rotation_axes = 7
+locked_scale_axes = 7
+
+[node name="R_Arm_Pole" type="Marker3D" parent="HumanRig/Arms" unique_id=1846231742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.352, 1.103, -0.878)
+script = ExtResource("7_31yu2")
+render_layers = 2
+show_rotate_handles = false
+show_scale_handles = false
+locked_rotation_axes = 7
+locked_scale_axes = 7
+handle_length = 0.7
+metadata/_custom_type_script = "uid://df7ihxsaqp7nm"
+
+[node name="Legs" type="Marker3D" parent="HumanRig" unique_id=93366733]
+
+[node name="L_Leg_IK" type="Marker3D" parent="HumanRig/Legs" unique_id=1128837248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.085, 0.36605272, 0)
+script = ExtResource("7_31yu2")
+render_layers = 2
+show_scale_handles = false
+locked_scale_axes = 7
+metadata/_custom_type_script = "uid://df7ihxsaqp7nm"
+
+[node name="L_Leg_Pole" type="Marker3D" parent="HumanRig/Legs" unique_id=690735957]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.085, 0.5, 0.5)
+script = ExtResource("7_31yu2")
+render_layers = 2
+show_rotate_handles = false
+show_scale_handles = false
+locked_rotation_axes = 7
+locked_scale_axes = 7
+handle_length = 0.7
+metadata/_custom_type_script = "uid://df7ihxsaqp7nm"
+
+[node name="R_Leg_IK" type="Marker3D" parent="HumanRig/Legs" unique_id=822055405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.085, 0.1, 0)
+script = ExtResource("7_31yu2")
+render_layers = 2
+metadata/_custom_type_script = "uid://df7ihxsaqp7nm"
+
+[node name="R_Leg_Pole" type="Marker3D" parent="HumanRig/Legs" unique_id=1427400703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.085, 0.5, 0.5)
+script = ExtResource("7_31yu2")
+render_layers = 2
+show_rotate_handles = false
+show_scale_handles = false
+locked_rotation_axes = 7
+locked_scale_axes = 7
+handle_length = 0.7
+metadata/_custom_type_script = "uid://df7ihxsaqp7nm"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=974429439]
+libraries/ = SubResource("AnimationLibrary_sie3q")
+
+[editable path="male"]

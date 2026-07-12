@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dkcpejawhmokj"]
+
+[ext_resource type="Script" uid="uid://df7ihxsaqp7nm" path="res://scene_editor/handles/transform_handle_3d.gd" id="1_6ef3g"]
+
+[node name="TransformHandle3D" type="Marker3D" unique_id=250667155]
+script = ExtResource("1_6ef3g")

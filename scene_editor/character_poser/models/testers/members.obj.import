@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ju83awrenl7v"
+path="res://.godot/imported/members.obj-d4c13b9bfb1f315a5cfa560a0e3dd7eb.mesh"
+
+[deps]
+
+files=["res://.godot/imported/members.obj-d4c13b9bfb1f315a5cfa560a0e3dd7eb.mesh"]
+
+source_file="res://scene_editor/character_poser/models/testers/members.obj"
+dest_files=["res://.godot/imported/members.obj-d4c13b9bfb1f315a5cfa560a0e3dd7eb.mesh", "res://.godot/imported/members.obj-d4c13b9bfb1f315a5cfa560a0e3dd7eb.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

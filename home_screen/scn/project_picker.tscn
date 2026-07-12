@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://c2b3d07yqd6ku"]
+
+[ext_resource type="Script" uid="uid://bpx3blqxqf77a" path="res://home_screen/src/project_picker.gd" id="1_25mby"]
+
+[node name="ProjectPicker" type="PanelContainer" unique_id=1611738174 node_paths=PackedStringArray("title", "descript", "open_btn")]
+theme_type_variation = &"PickerPanel"
+script = ExtResource("1_25mby")
+title = NodePath("MarginContainer/HBoxContainer/VBoxContainer/Label")
+descript = NodePath("MarginContainer/HBoxContainer/VBoxContainer/Label2")
+open_btn = NodePath("MarginContainer/HBoxContainer/Button")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1696793412]
+layout_mode = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=948028297]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=849902445]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=661852152]
+layout_mode = 2
+text = "Proj Name"
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=880130258]
+layout_mode = 2
+theme_type_variation = &"InfoLabel"
+text = "Proj Name"
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer" unique_id=1847361824]
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"ActionButton"
+text = "Open"

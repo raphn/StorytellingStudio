@@ -1,0 +1,69 @@
+extends PanelContainer
+class_name PagePanel
+
+@export var controller : ProjectEditor
+@export var graph : GraphEdit
+@export var page_num_display : Label
+
+@export_category("Debugging")
+@export var debug : MobileDebug
+
+## Display the page number in the bottom of the page as well
+var page_number := "":
+	set(val):
+		page_number = val
+		page_num_display.text = "Page %s" % val
+
+var _drawing := false
+var _press_lock := false
+
+
+func _process(delta: float) -> void:
+	_drawing = Input.is_action_pressed("draw")
+
+func _gui_input(event: InputEvent) -> void:
+	debug.push(str(event))
+	
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			if _press_lock:
+				return
+			
+			if _drawing:
+				_press_lock = true
+				_create_frame_at(event.position)
+		else:
+			_press_lock = false
+	
+	elif event is InputEventMouseButton:
+		if event.pressed:
+			if _press_lock:
+				return
+			
+			if _drawing:
+				_press_lock = true
+				_create_frame_at(event.position)
+		else:
+			_press_lock = false
+	
+	elif event is InputEventMouseMotion:
+		if event.button_mask == 0:
+			if _press_lock:
+				return
+			
+			if _drawing:
+				_press_lock = true
+				_create_frame_at(event.position)
+		else:
+			_press_lock = false
+
+
+func _create_frame_at(local_pos: Vector2) -> void:
+	var n_frame := VectorGraphElementRuntime.new()
+	graph.add_child(n_frame)
+	
+	var graph_pos := (local_pos + graph.scroll_offset) / graph.zoom
+	n_frame.position_offset = graph_pos
+	
+	controller.set_dirty()
+	n_frame.something_changed.connect(func(): controller.set_dirty())

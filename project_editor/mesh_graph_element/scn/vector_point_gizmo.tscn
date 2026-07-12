@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bu8rocjumqelm"]
+
+[ext_resource type="Script" uid="uid://bf2jot2ilo35q" path="res://project_editor/mesh_graph_element/src/vector_point_gizmo.gd" id="1_gizmo"]
+[ext_resource type="Texture2D" uid="uid://bb5j5x2oafi5k" path="res://project_editor/mesh_graph_element/graphs/point.png" id="2_point"]
+[ext_resource type="Texture2D" uid="uid://0ucmacnqbhnf" path="res://project_editor/mesh_graph_element/graphs/point_selected.png" id="3_point_selected"]
+
+[node name="VectorPointGizmo" type="TextureButton" unique_id=963736713]
+modulate = Color(0.5409905, 0.5409905, 0.5409905, 1)
+offset_right = 24.0
+offset_bottom = 24.0
+texture_normal = ExtResource("2_point")
+texture_pressed = ExtResource("3_point_selected")
+texture_hover = ExtResource("3_point_selected")
+texture_focused = ExtResource("3_point_selected")
+script = ExtResource("1_gizmo")

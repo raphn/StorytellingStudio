@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bdo121553nakp"]
+
+[ext_resource type="Texture2D" uid="uid://120eelkjsgcp" path="res://_project/frame forge splash screen.png" id="1_l43a5"]
+[ext_resource type="Script" uid="uid://b66phlb3qxy3i" path="res://loading_screen/loading_panel.gd" id="1_qven7"]
+[ext_resource type="Texture2D" uid="uid://c16lxyfap6mxu" path="res://graphs/drawing hand.png" id="2_qven7"]
+[ext_resource type="StyleBox" uid="uid://dmbip4kyakb2b" path="res://loading_screen/loading_bar.stylebox" id="4_njb18"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrivr"]
+bg_color = Color(0.060530342, 0.060530365, 0.060530297, 1)
+
+[sub_resource type="Gradient" id="Gradient_qven7"]
+offsets = PackedFloat32Array(0, 0.5110565, 1)
+colors = PackedColorArray(0.99148506, 0, 0.24612102, 1, 0.8316887, 0.48125923, 1, 1, 0.40324602, 0.46597123, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wi6ju"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.52906674, 0.5290667, 0.5290667, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 12.0
+expand_margin_top = 12.0
+expand_margin_bottom = 12.0
+
+[node name="LoadingPanel" type="PanelContainer" unique_id=666579964 node_paths=PackedStringArray("bar")]
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xrivr")
+script = ExtResource("1_qven7")
+colors = SubResource("Gradient_qven7")
+s_box = ExtResource("4_njb18")
+bar = NodePath("HSlider")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1261463134]
+layout_mode = 2
+texture = ExtResource("1_l43a5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HSlider" type="HSlider" parent="." unique_id=288087832]
+custom_minimum_size = Vector2(384, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_icons/grabber = ExtResource("2_qven7")
+theme_override_icons/grabber_highlight = ExtResource("2_qven7")
+theme_override_icons/grabber_disabled = ExtResource("2_qven7")
+theme_override_styles/slider = SubResource("StyleBoxFlat_wi6ju")
+theme_override_styles/grabber_area = ExtResource("4_njb18")
+max_value = 1.0
+step = 0.01
+value = 1.0
+editable = false
+scrollable = false

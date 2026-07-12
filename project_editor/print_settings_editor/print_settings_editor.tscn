@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://d3gno30gyv622"]
+
+[ext_resource type="Script" uid="uid://cgaofwtk3ornm" path="res://project_editor/print_settings_editor/print_settings_editor.gd" id="1_v3jdk"]
+
+[node name="PrintSettingsEditor" type="PanelContainer" unique_id=968486038 node_paths=PackedStringArray("measure_option", "page_w", "page_h", "apply_cancel_panel", "accept", "cancel")]
+custom_minimum_size = Vector2(0, 256)
+theme_type_variation = &"MenuPanelContainer"
+script = ExtResource("1_v3jdk")
+measure_option = NodePath("MarginContainer/VBoxContainer/MeasureOptionButton")
+page_w = NodePath("MarginContainer/VBoxContainer/HBoxContainer/WidthSpinBox")
+page_h = NodePath("MarginContainer/VBoxContainer/HBoxContainer/HeightSpinBox")
+apply_cancel_panel = NodePath("MarginContainer/VBoxContainer/HBoxContainer")
+accept = NodePath("MarginContainer/VBoxContainer/ApplyCancelPanel/AcceptButton")
+cancel = NodePath("MarginContainer/VBoxContainer/ApplyCancelPanel/CancelButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1383953600]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1827552356]
+layout_mode = 2
+
+[node name="ApplyCancelPanel" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=549033589]
+layout_mode = 2
+
+[node name="AcceptButton" type="Button" parent="MarginContainer/VBoxContainer/ApplyCancelPanel" unique_id=432462175]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Apply"
+
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/ApplyCancelPanel" unique_id=448472961]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1347242458]
+layout_mode = 2
+theme_type_variation = &"H1Label"
+text = "Page size:"
+
+[node name="MeasureOptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer" unique_id=474264633]
+layout_mode = 2
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Inches"
+popup/item_0/id = 0
+popup/item_1/text = "Centimeters"
+popup/item_1/id = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1501655855]
+layout_mode = 2
+
+[node name="WidthSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=34965499]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.01
+allow_greater = true
+allow_lesser = true
+alignment = 1
+prefix = "width"
+suffix = "\""
+
+[node name="HeightSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=178494620]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.01
+allow_greater = true
+allow_lesser = true
+alignment = 1
+prefix = "height"
+suffix = "\""
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ApplyCancelPanel/AcceptButton" to="." method="_accept"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ApplyCancelPanel/CancelButton" to="." method="_cancel"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/MeasureOptionButton" to="." method="_on_measure_option_button_item_selected"]

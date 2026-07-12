@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://b21gwhrp7l2so"]
+
+[ext_resource type="Texture2D" uid="uid://ct3ff238n56fe" path="res://icon.svg" id="1_6cxw2"]
+[ext_resource type="Script" uid="uid://nmpu8xjhd23x" path="res://scene_editor/src/scene_picker_container.gd" id="1_6xv3g"]
+[ext_resource type="PackedScene" uid="uid://cuqeqvvj8is64" path="res://scene_editor/scn/actor_thumbnail_display.tscn" id="3_5qk2e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xc0si"]
+bg_color = Color(0.22352941, 0.6627451, 0.8392157, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="ScenePickerContainer" type="PanelContainer" unique_id=8366327 node_paths=PackedStringArray("actor_thumbs_root", "open_scene_btn")]
+custom_minimum_size = Vector2(352, 0)
+theme_type_variation = &"PickerPanel"
+script = ExtResource("1_6xv3g")
+actor_thumbs_root = NodePath("MarginContainer/VBoxContainer/ActorThumbnailsRoot")
+open_scene_btn = NodePath("MarginContainer/VBoxContainer/HBoxContainer/OpenSceneButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1230498036]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1744796482]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1385219019]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=998570312]
+clip_children = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xc0si")
+
+[node name="SceneThumb" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer" unique_id=1843695351]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("1_6cxw2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1285935944]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=265441809]
+layout_mode = 2
+text = "Scene 01"
+
+[node name="Descript" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=732362612]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"InfoLabel"
+text = "Brief description of the scene"
+text_overrun_behavior = 5
+
+[node name="OpenSceneButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=211579939]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"ActionButton"
+text = "Edit"
+
+[node name="ActorThumbnailsRoot" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=677635940]
+visible = false
+layout_mode = 2
+
+[node name="ActorThumbnailDisplay" parent="MarginContainer/VBoxContainer/ActorThumbnailsRoot" unique_id=1049724446 instance=ExtResource("3_5qk2e")]
+layout_mode = 2

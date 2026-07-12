@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cn2ybf0n8rxen"
+path="res://.godot/imported/head_simple.obj-165c56c06fd3ca8604ab29e89913fcb0.mesh"
+
+[deps]
+
+files=["res://.godot/imported/head_simple.obj-165c56c06fd3ca8604ab29e89913fcb0.mesh"]
+
+source_file="res://scene_editor/character_poser/models/testers/head_simple.obj"
+dest_files=["res://.godot/imported/head_simple.obj-165c56c06fd3ca8604ab29e89913fcb0.mesh", "res://.godot/imported/head_simple.obj-165c56c06fd3ca8604ab29e89913fcb0.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

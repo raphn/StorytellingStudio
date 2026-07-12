@@ -1,0 +1,295 @@
+[gd_scene format=3 uid="uid://r1ihhbkxfiwr"]
+
+[ext_resource type="Script" uid="uid://yee3xja3vqj4" path="res://scene_editor/src/scene_editor.gd" id="1_yhpue"]
+[ext_resource type="Texture2D" uid="uid://d0dcy38g37ehq" path="res://graphs/footprints.png" id="3_i8og1"]
+[ext_resource type="Script" uid="uid://df4pglnllv4tk" path="res://scene_editor/src/self_controlled_camera_3d.gd" id="3_ufles"]
+[ext_resource type="Texture2D" uid="uid://dbqf422ln08cl" path="res://graphs/looking eye.png" id="4_1bylh"]
+[ext_resource type="PackedScene" uid="uid://bi1e46gm67oln" path="res://scene_editor/scn/characters_editor.tscn" id="4_i8og1"]
+[ext_resource type="Script" path="res://scene_editor/src/camera_minimap.gd" id="5_minimap"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4f0rg"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_curve = 0.20490594
+ground_bottom_color = Color(0.24840006, 0.24840021, 0.24840006, 1)
+ground_curve = 0.09849169
+
+[sub_resource type="Sky" id="Sky_l1or2"]
+sky_material = SubResource("ProceduralSkyMaterial_4f0rg")
+
+[sub_resource type="Environment" id="Environment_3elyv"]
+background_mode = 2
+sky = SubResource("Sky_l1or2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_xrivr"]
+material = SubResource("StandardMaterial3D_13qdw")
+size = Vector2(25, 25)
+orientation = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i8og1"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufles"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="ComicSceneEditor" type="Node3D" unique_id=1718848205 node_paths=PackedStringArray("add_char_btn", "char_editor", "frame_editor")]
+script = ExtResource("1_yhpue")
+add_char_btn = NodePath("PanelContainer/VBoxContainer/PanelContainer/MarginContainer/AddCharButton")
+char_editor = NodePath("PanelContainer/CharactersEditor")
+frame_editor = NodePath("PanelContainer/VBoxContainer/FrameCamEditor")
+metadata/locked_view_camera_path = NodePath("MasterCamera")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1143583536]
+environment = SubResource("Environment_3elyv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1717189468]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=613833656]
+mesh = SubResource("QuadMesh_xrivr")
+
+[node name="MasterCamera" type="Camera3D" parent="." unique_id=645208969]
+transform = Transform3D(0.7071068, -0.2520582, 0.66065633, 0, 0.934309, 0.35646415, -0.7071068, -0.2520582, 0.66065633, 2.1420162, 2.2424903, 2.0467494)
+current = true
+fov = 55.0
+script = ExtResource("3_ufles")
+move_action_name = "main_cam"
+look_action_name = "main_cam_look"
+move_speed = 2.0
+look_speed = 45.0
+
+[node name="SceneRoot" type="Node3D" parent="." unique_id=12264759]
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1631385823]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"CleanPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=669179339]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer" unique_id=1971476529]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/PanelContainer" unique_id=2022030769]
+layout_mode = 2
+
+[node name="AddCharButton" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=474846078]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"ActionButton"
+text = "Add character"
+
+[node name="CameraController" type="Control" parent="PanelContainer/VBoxContainer" unique_id=1518857553]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CamMove" type="VirtualJoystick" parent="PanelContainer/VBoxContainer/CameraController" unique_id=1097850135]
+z_index = 5
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -75.0
+offset_right = 80.0
+offset_bottom = -35.0
+grow_vertical = 0
+action_left = &"main_cam_left"
+action_right = &"main_cam_right"
+action_up = &"main_cam_up"
+action_down = &"main_cam_down"
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/CameraController/CamMove" unique_id=640506818]
+modulate = Color(1, 1, 1, 0.5882353)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-36, -64)
+texture = ExtResource("3_i8og1")
+expand_mode = 1
+
+[node name="CamLook" type="VirtualJoystick" parent="PanelContainer/VBoxContainer/CameraController" unique_id=574496337]
+z_index = 5
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -75.0
+offset_right = -44.0
+offset_bottom = -35.0
+grow_horizontal = 0
+grow_vertical = 0
+action_left = &"main_cam_look_left"
+action_right = &"main_cam_look_right"
+action_up = &"main_cam_look_up"
+action_down = &"main_cam_look_down"
+
+[node name="TextureRect2" type="TextureRect" parent="PanelContainer/VBoxContainer/CameraController/CamLook" unique_id=588790581]
+modulate = Color(1, 1, 1, 0.5882353)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(36, -64)
+texture = ExtResource("4_1bylh")
+expand_mode = 1
+
+[node name="CameraMinimap" type="Control" parent="PanelContainer/VBoxContainer/CameraController"]
+z_index = 4
+custom_minimum_size = Vector2(108, 224)
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -126.0
+offset_top = 12.0
+offset_right = -18.0
+offset_bottom = 236.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("5_minimap")
+camera_path = NodePath("../../../../MasterCamera")
+
+[node name="FrameCamEditor" type="PanelContainer" parent="PanelContainer/VBoxContainer" unique_id=952964846]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_i8og1")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/FrameCamEditor" unique_id=1846622074]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer" unique_id=115665869]
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer" unique_id=1083746848]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ufles")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2" unique_id=1407190202]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2/SubViewportContainer" unique_id=856319425]
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(632, 535)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2/SubViewportContainer/SubViewport" unique_id=1092830089]
+transform = Transform3D(-4.371139e-08, -0.2864981, 0.9580808, 0, 0.9580808, 0.2864981, -1, 1.252323e-08, -4.1879044e-08, 1.6599568, 1.4609258, 0.15857947)
+cull_mask = 1048573
+script = ExtResource("3_ufles")
+move_action_name = "sec_cam_move"
+look_action_name = "sec_cam_look"
+move_speed = 2.0
+look_speed = 45.0
+
+[node name="CamControl2" type="Control" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2" unique_id=1284489369]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CamMove" type="VirtualJoystick" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2/CamControl2" unique_id=1043174650]
+z_index = 5
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -75.0
+offset_right = 80.0
+offset_bottom = -35.0
+grow_vertical = 0
+action_left = &"sec_cam_move_left"
+action_right = &"sec_cam_move_right"
+action_up = &"sec_cam_move_up"
+action_down = &"sec_cam_move_down"
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2/CamControl2/CamMove" unique_id=172589317]
+modulate = Color(1, 1, 1, 0.5882353)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-36, -64)
+texture = ExtResource("3_i8og1")
+expand_mode = 1
+
+[node name="CamLook" type="VirtualJoystick" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2/CamControl2" unique_id=1292390071]
+z_index = 5
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -75.0
+offset_right = -44.0
+offset_bottom = -35.0
+grow_horizontal = 0
+grow_vertical = 0
+action_left = &"sec_cam_look_left"
+action_right = &"sec_cam_look_right"
+action_up = &"sec_cam_look_up"
+action_down = &"sec_cam_look_down"
+
+[node name="TextureRect2" type="TextureRect" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2/CamControl2/CamLook" unique_id=1984886801]
+modulate = Color(1, 1, 1, 0.5882353)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(36, -64)
+texture = ExtResource("4_1bylh")
+expand_mode = 1
+
+[node name="CameraMinimap" type="Control" parent="PanelContainer/VBoxContainer/FrameCamEditor/MarginContainer/HBoxContainer/PanelContainer2/CamControl2"]
+z_index = 4
+custom_minimum_size = Vector2(108, 224)
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -126.0
+offset_top = 12.0
+offset_right = -18.0
+offset_bottom = 236.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("5_minimap")
+camera_path = NodePath("../../SubViewportContainer/SubViewport/Camera3D")
+
+[node name="CharactersEditor" parent="PanelContainer" unique_id=1259463794 instance=ExtResource("4_i8og1")]
+visible = false
+layout_mode = 2
