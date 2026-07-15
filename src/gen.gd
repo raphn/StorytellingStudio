@@ -76,10 +76,9 @@ func _open_project_editor() -> void:
 
 ## Removes the current instance of Project Editor context
 func _close_project_editor() -> void:
-	#project_editor._save_project()
-	
-	remove_child(project_editor)
-	project_editor.queue_free()
+	if project_editor:
+		remove_child(project_editor)
+		project_editor.queue_free()
 
 ## Exits to home screen
 func exit_project_edition() -> void:
@@ -116,7 +115,7 @@ func _switch_to_scene_editor(scene_ID:int) -> void:
 	LoadingScreen.set_progress(0.75)
 	
 	# Configure Scene Editor with desired scene
-	scene_editor.star_scene_editing(self, scene_ID)
+	scene_editor.star_scene_editing(opened_project, scene_ID)
 	LoadingScreen.set_progress(1.0)
 	
 	await get_tree().process_frame
@@ -124,7 +123,14 @@ func _switch_to_scene_editor(scene_ID:int) -> void:
 
 ## Move back from Scene Editing Context to Project Editing context 
 func finish_editing_scene() -> void:
-	pass
+	await _open_loading_screen()
+	_close_scene_editor()
+	_open_project_editor()
+
+func _close_scene_editor() -> void:
+	if scene_editor:
+		remove_child(scene_editor)
+		scene_editor.queue_free()
 
 
 # =============================================================== || Statics

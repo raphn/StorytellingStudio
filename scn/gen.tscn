@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://csrg7cakl7g5x"]
 
 [ext_resource type="Script" uid="uid://ddsltvye3sajr" path="res://src/gen.gd" id="1_nd1r6"]
-[ext_resource type="Script" uid="uid://bedq4ki5tfnjt" path="res://src/runtime_assets/runtime_asset_manager.gd" id="2_6wysa"]
+[ext_resource type="Script" uid="uid://bedq4ki5tfnjt" path="res://runtime_assets/runtime_asset_manager.gd" id="2_6wysa"]
 [ext_resource type="PackedScene" uid="uid://celikaodxm83i" path="res://scene_editor/character_poser/models/male/_default__rigger/rigger_scene.tscn" id="3_qlao0"]
 
 [node name="GEN" type="Node" unique_id=160664865]

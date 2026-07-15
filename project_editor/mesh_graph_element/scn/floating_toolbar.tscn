@@ -3,17 +3,19 @@
 [ext_resource type="Script" uid="uid://b11oij5l6krx5" path="res://project_editor/mesh_graph_element/src/floating_toolbar.gd" id="1_b1dku"]
 [ext_resource type="Texture2D" uid="uid://r6qdrws7ea2u" path="res://graphs/undo.png" id="1_xeqp4"]
 [ext_resource type="Texture2D" uid="uid://7uwvi4s3yvxp" path="res://graphs/redo.png" id="2_b1dku"]
+[ext_resource type="Texture2D" uid="uid://dsyrejeob2dhg" path="res://project_editor/mesh_graph_element/graphs/frame pick.png" id="4_bkjm3"]
 [ext_resource type="Texture2D" uid="uid://63r14hm5nc4e" path="res://project_editor/mesh_graph_element/graphs/reset.png" id="4_l4ebd"]
 [ext_resource type="Texture2D" uid="uid://bk7ybacmgulw0" path="res://project_editor/mesh_graph_element/graphs/accept.png" id="5_joyoc"]
 [ext_resource type="Texture2D" uid="uid://c13acj85c5588" path="res://project_editor/mesh_graph_element/graphs/copy.png" id="5_n8ivb"]
 [ext_resource type="Texture2D" uid="uid://bi0le1qme76m8" path="res://graphs/delete.png" id="7_q2wqr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ciyd"]
-bg_color = Color(0.2231029, 0.2231029, 0.22310284, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+bg_color = Color(0.36, 0.30060002, 0.252, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 8
+border_width_bottom = 3
+border_color = Color(0.9, 0.9, 0.9, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -22,12 +24,11 @@ shadow_color = Color(0, 0, 0, 0.3764706)
 shadow_size = 4
 shadow_offset = Vector2(-3.38, 2.35)
 
-[node name="FloatingToolbar" type="GraphElement" unique_id=530425593 node_paths=PackedStringArray("undo_btn", "redo_btn", "reset_btn", "copy_btn", "accept_btn", "delete_btn")]
+[node name="FloatingToolbar" type="GraphElement" unique_id=530425593 node_paths=PackedStringArray("undo_btn", "redo_btn", "reset_btn", "copy_btn", "accept_btn", "delete_btn", "frame_picker")]
 offset_left = 219.0
 offset_top = 192.0
-offset_right = 303.0
-offset_bottom = 240.0
-position_offset = Vector2(219, 192)
+offset_right = 322.0
+offset_bottom = 218.0
 draggable = false
 selectable = false
 script = ExtResource("1_b1dku")
@@ -37,6 +38,8 @@ reset_btn = NodePath("PanelContainer/MarginContainer/HBoxContainer/ResetButton")
 copy_btn = NodePath("PanelContainer/MarginContainer/HBoxContainer/CopyButton")
 accept_btn = NodePath("PanelContainer/MarginContainer/HBoxContainer/AcceptButton")
 delete_btn = NodePath("PanelContainer/MarginContainer/HBoxContainer/DeleteButton")
+frame_picker = NodePath("PanelContainer/MarginContainer/HBoxContainer/FrameButton")
+btn_size = 36
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1236633459]
 layout_mode = 2
@@ -50,38 +53,77 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="UndoButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=1563125814]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_type_variation = &"SmallActionButton"
 icon = ExtResource("1_xeqp4")
 expand_icon = true
 
 [node name="RedoButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=1103792972]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_type_variation = &"SmallActionButton"
 icon = ExtResource("2_b1dku")
 expand_icon = true
 
-[node name="ResetButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=1054569329]
-custom_minimum_size = Vector2(32, 32)
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=1703790241]
 layout_mode = 2
+
+[node name="FrameButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=168250038]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_type_variation = &"SmallActionButton"
+icon = ExtResource("4_bkjm3")
+expand_icon = true
+
+[node name="VSeparator2" type="VSeparator" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=173673118]
+layout_mode = 2
+
+[node name="ResetButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=1054569329]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_type_variation = &"SmallActionButton"
 icon = ExtResource("4_l4ebd")
 expand_icon = true
 
 [node name="AcceptButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=365815533]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_type_variation = &"SmallActionButton"
 icon = ExtResource("5_joyoc")
 expand_icon = true
 
 [node name="CopyButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=1511863837]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_type_variation = &"SmallActionButton"
 icon = ExtResource("5_n8ivb")
 expand_icon = true
 
+[node name="VSeparator3" type="VSeparator" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=1831596335]
+layout_mode = 2
+
 [node name="DeleteButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=387873207]
 modulate = Color(1, 0.473, 0.38, 1)
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_type_variation = &"SmallActionButton"
 icon = ExtResource("7_q2wqr")
 expand_icon = true
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

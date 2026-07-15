@@ -1,56 +1,50 @@
 [gd_scene format=3 uid="uid://celikaodxm83i"]
 
 [ext_resource type="PackedScene" uid="uid://d02ksw6ph56gq" path="res://scene_editor/character_poser/models/male/_default__rigger/rigger.glb" id="1_0cnh1"]
-[ext_resource type="Script" uid="uid://dvgherax36wjr" path="res://scene_editor/character_poser/src/character_poser.gd" id="1_nwbxx"]
+[ext_resource type="Script" uid="uid://dvgherax36wjr" path="res://scene_editor/character_poser/src/actor_poser.gd" id="1_nwbxx"]
 [ext_resource type="Material" uid="uid://b3ifqupk8m1nn" path="res://scene_editor/character_poser/models/materials/body.material" id="2_labkg"]
 [ext_resource type="Material" uid="uid://eye2dh1gpwtm" path="res://scene_editor/character_poser/models/materials/black_line.material" id="3_200k4"]
 [ext_resource type="Material" uid="uid://dehum7qrxyx6g" path="res://scene_editor/character_poser/models/materials/joints.material" id="4_es6ys"]
 [ext_resource type="PackedScene" uid="uid://dkcpejawhmokj" path="res://scene_editor/handles/transform_handle_3d.tscn" id="6_ldpfh"]
 [ext_resource type="Script" uid="uid://df7ihxsaqp7nm" path="res://scene_editor/handles/transform_handle_3d.gd" id="7_31yu2"]
+[ext_resource type="Script" uid="uid://bf8c8t7ncy6s8" path="res://scene_editor/character_poser/src/runtime_rig_builder.gd" id="8_q3mtr"]
 
-[sub_resource type="Animation" id="Animation_31yu2"]
-resource_name = "new_animation"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_sie3q"]
-_data = {
-&"new_animation": SubResource("Animation_31yu2")
-}
-
-[node name="CharacterRoot" type="Node3D" unique_id=858638182 node_paths=PackedStringArray("human_rig", "controllers")]
+[node name="CharacterRoot" type="Node3D" unique_id=858638182 node_paths=PackedStringArray("model_root", "human_rig", "controllers")]
 script = ExtResource("1_nwbxx")
+model_root = NodePath("male/DummyArmature/Skeleton3D")
 human_rig = NodePath("HumanRig")
 controllers = [NodePath("HumanRig/Arms/L_Arm_IK"), NodePath("HumanRig/Arms/L_Arm_Pole")]
 
 [node name="male" parent="." unique_id=1121191155 instance=ExtResource("1_0cnh1")]
 
-[node name="body_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="0" unique_id=311206312]
+[node name="body_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="0" unique_id=665677327]
 surface_material_override/0 = ExtResource("2_labkg")
 surface_material_override/1 = ExtResource("3_200k4")
 
-[node name="char_ground" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="1" unique_id=156534880]
+[node name="char_ground" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="1" unique_id=115938334]
 surface_material_override/0 = ExtResource("2_labkg")
 surface_material_override/1 = ExtResource("3_200k4")
 
-[node name="head_simple" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="2" unique_id=1063079597]
+[node name="head_simple" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="2" unique_id=30994322]
 surface_material_override/0 = ExtResource("2_labkg")
 
-[node name="head_guide_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="3" unique_id=97814688]
+[node name="head_guide_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="3" unique_id=231980222]
 surface_material_override/0 = ExtResource("3_200k4")
 
-[node name="head_guide_lines_001" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="4" unique_id=1910041338]
+[node name="head_guide_lines_001" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="4" unique_id=91190140]
 surface_material_override/0 = ExtResource("3_200k4")
 
-[node name="head_guide_lines_002" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="5" unique_id=2133505521]
+[node name="head_guide_lines_002" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="5" unique_id=613509067]
 surface_material_override/0 = ExtResource("3_200k4")
 
-[node name="joints" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="6" unique_id=181806449]
+[node name="joints" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="6" unique_id=337082865]
 surface_material_override/0 = ExtResource("4_es6ys")
 
-[node name="members_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="7" unique_id=802029003]
+[node name="members_lines" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="7" unique_id=343210197]
 surface_material_override/0 = ExtResource("2_labkg")
 surface_material_override/1 = ExtResource("3_200k4")
 
-[node name="L_ARM_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="8" unique_id=293573071]
+[node name="L_ARM_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="8" unique_id=293573071]
 setting_count = 1
 settings/0/target_node = NodePath("../../../../HumanRig/Arms/L_Arm_IK")
 settings/0/pole_node = NodePath("../../../../HumanRig/Arms/L_Arm_Pole")
@@ -64,7 +58,7 @@ settings/0/end_bone = 7
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
 
-[node name="R_ARM_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="9" unique_id=1980357039]
+[node name="R_ARM_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="9" unique_id=1980357039]
 setting_count = 1
 settings/0/target_node = NodePath("../../../../HumanRig/Arms/R_Arm_IK")
 settings/0/pole_node = NodePath("../../../../HumanRig/Arms/R_Arm_Pole")
@@ -78,7 +72,7 @@ settings/0/end_bone = 25
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
 
-[node name="L_LEG_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="10" unique_id=1743083230]
+[node name="L_LEG_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="10" unique_id=1743083230]
 setting_count = 1
 settings/0/target_node = NodePath("../../../../HumanRig/Legs/L_Leg_IK")
 settings/0/pole_node = NodePath("../../../../HumanRig/Legs/L_Leg_Pole")
@@ -92,7 +86,7 @@ settings/0/end_bone = 43
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
 
-[node name="R_LEG_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 590537199) index="11" unique_id=477348763]
+[node name="R_LEG_IK" type="TwoBoneIK3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="11" unique_id=477348763]
 setting_count = 1
 settings/0/target_node = NodePath("../../../../HumanRig/Legs/R_Leg_IK")
 settings/0/pole_node = NodePath("../../../../HumanRig/Legs/R_Leg_Pole")
@@ -105,6 +99,23 @@ settings/0/end_bone_name = "foot.r"
 settings/0/end_bone = 47
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
+
+[node name="AimModifier3D" type="AimModifier3D" parent="male/DummyArmature/Skeleton3D" parent_id_path=PackedInt32Array(1121191155, 1055526271) index="12" unique_id=1246939318]
+setting_count = 1
+settings/0/amount = 1.0
+settings/0/apply_bone_name = ""
+settings/0/apply_bone = -1
+settings/0/reference_type = 0
+settings/0/reference_bone_name = ""
+settings/0/reference_bone = -1
+settings/0/forward_axis = 2
+settings/0/use_euler = false
+settings/0/relative = true
+
+[node name="RuntimeRigBuilder" type="Node3D" parent="." unique_id=1342765474 node_paths=PackedStringArray("actor_root", "skeleton")]
+script = ExtResource("8_q3mtr")
+actor_root = NodePath("..")
+skeleton = NodePath("../male/DummyArmature/Skeleton3D")
 
 [node name="HumanRig" type="Marker3D" parent="." unique_id=794504470]
 
@@ -185,8 +196,5 @@ locked_rotation_axes = 7
 locked_scale_axes = 7
 handle_length = 0.7
 metadata/_custom_type_script = "uid://df7ihxsaqp7nm"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=974429439]
-libraries/ = SubResource("AnimationLibrary_sie3q")
 
 [editable path="male"]

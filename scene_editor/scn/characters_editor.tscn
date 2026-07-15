@@ -2,11 +2,17 @@
 
 [ext_resource type="Script" uid="uid://3t1fkf8aj81d" path="res://src/proportional_center_container.gd" id="1_cnuq1"]
 [ext_resource type="Script" uid="uid://dpd3sq6vvj273" path="res://scene_editor/src/characters_editor.gd" id="1_h2mnp"]
-[ext_resource type="Texture2D" uid="uid://ct3ff238n56fe" path="res://icon.svg" id="2_h2mnp"]
+[ext_resource type="Resource" uid="uid://dwy1kr3cqeyd1" path="res://runtime_assets/run_time_actors.tres" id="2_3fk13"]
 
-[node name="CharactersEditor" type="PanelContainer" unique_id=1259463794 node_paths=PackedStringArray("close_btn")]
+[node name="CharactersEditor" type="PanelContainer" unique_id=1259463794 node_paths=PackedStringArray("close_btn", "actors_root", "new_char", "close_btn2")]
+offset_right = 646.0
+offset_bottom = 808.0
 script = ExtResource("1_h2mnp")
+actors = ExtResource("2_3fk13")
 close_btn = NodePath("CancelCharAddButton")
+actors_root = NodePath("ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActorsList")
+new_char = NodePath("ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/NewCharButton")
+close_btn2 = NodePath("ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CloseButton")
 
 [node name="CancelCharAddButton" type="Button" parent="." unique_id=1400584623]
 layout_mode = 2
@@ -19,6 +25,7 @@ metadata/_custom_type_script = "uid://3t1fkf8aj81d"
 
 [node name="PanelContainer" type="PanelContainer" parent="ProportionalCenterContainer" unique_id=1393125951]
 layout_mode = 2
+mouse_filter = 1
 theme_type_variation = &"MenuPanelContainer"
 
 [node name="MarginContainer" type="MarginContainer" parent="ProportionalCenterContainer/PanelContainer" unique_id=1768067557]
@@ -41,73 +48,24 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1114686994]
+[node name="ActorsList" type="VBoxContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1114686994]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1928915682]
+[node name="HBoxContainer" type="HBoxContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=416316132]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer" unique_id=1209635377]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=1323461904]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1724092692]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1374568363]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer" unique_id=969415794]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-texture = ExtResource("2_h2mnp")
-
-[node name="OptionButton" type="OptionButton" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=134393056]
-layout_mode = 2
-clip_text = true
-selected = 0
-fit_to_longest_item = false
-search_bar_enabled = true
-item_count = 2
-popup/item_0/text = "Rigger"
-popup/item_0/id = 0
-popup/item_1/text = "Framy"
-popup/item_1/id = 1
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=498252683]
+[node name="NewCharButton" type="Button" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1488735136]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1744718222]
-layout_mode = 2
-text = "Character Profile"
-
-[node name="LineEdit" type="LineEdit" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1658839814]
-layout_mode = 2
-size_flags_vertical = 2
-text = "Character"
-placeholder_text = "Character Name"
-max_length = 50
-clear_button_enabled = true
-select_all_on_focus = true
-
-[node name="PanelContainer" type="PanelContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=246439676]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/PanelContainer" unique_id=157515542]
-layout_mode = 2
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/PanelContainer/MarginContainer" unique_id=492476675]
-custom_minimum_size = Vector2(0, 64)
-layout_mode = 2
-
-[node name="Button" type="Button" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1488735136]
-layout_mode = 2
 theme_type_variation = &"ActionButton"
 theme_override_font_sizes/font_size = 22
-text = "Add new character"
+text = "New character"
+
+[node name="CloseButton" type="Button" parent="ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1009731861]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ActionButton"
+theme_override_font_sizes/font_size = 22
+text = "Close"

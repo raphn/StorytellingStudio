@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RuntimeActors" format=3 uid="uid://dwy1kr3cqeyd1"]
+
+[ext_resource type="Script" uid="uid://cb4cgpspw65ej" path="res://runtime_assets/src/runtime_actors/runtime_actor.gd" id="1_0cis2"]
+[ext_resource type="Resource" uid="uid://tt7kycxvxk18" path="res://scene_editor/character_poser/models/male/_default__rigger/rigger_actor.tres" id="2_8odhx"]
+[ext_resource type="Script" uid="uid://brv3rvmvaq2v7" path="res://runtime_assets/src/runtime_actors/runtime_actors.gd" id="2_etk3o"]
+
+[resource]
+script = ExtResource("2_etk3o")
+actors = Dictionary[StringName, ExtResource("1_0cis2")]({
+&"Rigger": ExtResource("2_8odhx")
+})
+metadata/_custom_type_script = "uid://brv3rvmvaq2v7"

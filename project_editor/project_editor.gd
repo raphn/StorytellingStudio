@@ -106,6 +106,8 @@ func open(proj:ProjectData) -> void:
 	_set_notification_bar(true)
 	
 	# TODO DEBUG FEEDBACK
+	graph.apply_zoom(editing.editing_zoom)
+	graph.scroll_offset = editing.editing_scroll
 	finished_opening_project.emit()
 
 func _create_scene_picker(scene:SceneData, scene_id:int) -> void:
@@ -290,6 +292,9 @@ func _save_project() -> void:
 	
 	# Gather frames and save to pages
 	_save_frames_to_current_page(false)
+	
+	editing.editing_zoom = graph.zoom
+	editing.editing_scroll = graph.scroll_offset
 	
 	editing.save()
 	_set_notification_bar(true)

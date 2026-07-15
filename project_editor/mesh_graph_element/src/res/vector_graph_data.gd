@@ -5,6 +5,7 @@ class_name VectorGraphData
 @export var position_offset			: Vector2
 @export var size					: Vector2
 @export var custom_minimum_size		: Vector2
+@export var frame_path := ""
 
 @export var resizable			: bool
 @export var draggable			: bool

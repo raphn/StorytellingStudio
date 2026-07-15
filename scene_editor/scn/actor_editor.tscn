@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://d3n5tky3titk2"]
+
+[ext_resource type="Script" uid="uid://bgo7pqcurg7ht" path="res://scene_editor/src/actor_char_editor.gd" id="1_1afdd"]
+[ext_resource type="Texture2D" uid="uid://ct3ff238n56fe" path="res://icon.svg" id="2_k21dr"]
+
+[node name="ActorEditor" type="PanelContainer" unique_id=365280036 node_paths=PackedStringArray("label", "linked_scenes", "thumbnail", "model_picker", "char_name", "char_color", "add_remove_btn")]
+theme_type_variation = &"PickerPanel"
+script = ExtResource("1_1afdd")
+label = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/Label")
+linked_scenes = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/LinkedToScenesList")
+thumbnail = NodePath("MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/CharThumb")
+model_picker = NodePath("MarginContainer/HBoxContainer/VBoxContainer/ModelOptionButton")
+char_name = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/CharNameEdit")
+char_color = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/ColorPicker")
+add_remove_btn = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/AddRemoveButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=683330844]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=139404896]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1749117464]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=554234044]
+layout_mode = 2
+
+[node name="CharThumb" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/MarginContainer" unique_id=1429103114]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("2_k21dr")
+
+[node name="ModelOptionButton" type="OptionButton" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=2062748832]
+layout_mode = 2
+clip_text = true
+selected = 0
+fit_to_longest_item = false
+search_bar_enabled = true
+item_count = 2
+popup/item_0/text = "Rigger"
+popup/item_0/id = 0
+popup/item_1/text = "Framy"
+popup/item_1/id = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1881251239]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/PanelContainer" unique_id=2129721384]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorPicker" type="ColorPickerButton" parent="MarginContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=2113976120]
+layout_mode = 2
+text = "Color"
+color = Color(1, 1, 1, 1)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1776511333]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1455464261]
+layout_mode = 2
+theme_type_variation = &"InfoLabel"
+text = "Profile"
+
+[node name="CharNameEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=217194892]
+layout_mode = 2
+text = "Character"
+placeholder_text = "Character Name"
+max_length = 50
+clear_button_enabled = true
+select_all_on_focus = true
+
+[node name="LinkedToScenesList" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=410505014]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"InfoLabel"
+text = "Linked to:
+Scene ID - 1
+Scene ID - 2
+Scene ID - 3
+Scene ID - 4"
+autowrap_mode = 2
+text_overrun_behavior = 5
+max_lines_visible = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=245235227]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=231865743]
+layout_mode = 2
+theme_type_variation = &"InfoLabel"
+text = "Is on this scene?"
+
+[node name="AddRemoveButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1155561485]
+layout_mode = 2
+theme_type_variation = &"ToColorButton"
+toggle_mode = true
+text = "No"

@@ -2,8 +2,11 @@ extends GraphEdit
 class_name DrawTable
 
 @export var speed := 200.0
-@export var floating_toolbar : FloatingToolbar
 @export var zoom_slider : VSlider
+
+@export_category("FLoating Toolbar")
+@export var floating_toolbar : FloatingToolbar
+@export var frame_picker_win : PanelContainer
 
 var frame_selected :VectorGraphElementRuntime
 
@@ -47,6 +50,10 @@ func recenter() -> void:
 	zoom = 1.0
 	scroll_offset = Vector2.ZERO
 	zoom_slider.set_value_no_signal(zoom)
+
+func apply_zoom(value:float) -> void:
+	zoom = value
+	zoom_slider.set_value_no_signal(value)
 
 
 # ======================================== || NODE HANDLING ............. ||
@@ -125,9 +132,9 @@ func _transmit_reset_request() -> void:
 		frame_selected.reset_shape()
 
 
-# ======================================== || INTERNAL .................. ||
+# ======================================== || NAVIGATION ................ ||
 func _reposition_floating_toolbar() -> void:
-	floating_toolbar.position_offset = frame_selected.position_offset + (Vector2.UP * 64)
+	floating_toolbar.position_offset = frame_selected.position_offset + (Vector2.UP * 128)
 
 func _handle_touch(event: InputEventScreenTouch) -> void:
 	var local_position := _to_local_position(event.position)
@@ -171,9 +178,10 @@ func _handle_drag(event: InputEventScreenDrag) -> void:
 	var zoom_ratio := current_distance / _previous_distance
 	var new_zoom := clampf(zoom * zoom_ratio, zoom_min, zoom_max)
 
-	zoom = new_zoom
-	zoom_slider.set_value_no_signal(zoom)
-
+	#zoom = new_zoom
+	#zoom_slider.set_value_no_signal(zoom)
+	apply_zoom(new_zoom)
+	
 	# Keep the same graph position beneath the moving pinch center.
 	# This also allows two-finger panning.
 	scroll_offset = graph_anchor - current_center / zoom

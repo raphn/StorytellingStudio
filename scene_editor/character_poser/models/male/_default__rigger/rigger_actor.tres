@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RuntimeActor" format=3 uid="uid://tt7kycxvxk18"]
+
+[ext_resource type="PackedScene" uid="uid://celikaodxm83i" path="res://scene_editor/character_poser/models/male/_default__rigger/rigger_scene.tscn" id="1_vohc1"]
+[ext_resource type="Script" uid="uid://cb4cgpspw65ej" path="res://runtime_assets/src/runtime_actors/runtime_actor.gd" id="2_plxct"]
+[ext_resource type="Texture2D" uid="uid://bb8uwtjibjhb6" path="res://scene_editor/character_poser/models/male/_default__rigger/Captura de tela 2026-07-13 153149.png" id="3_plxct"]
+
+[resource]
+script = ExtResource("2_plxct")
+thumbnail = ExtResource("3_plxct")
+scene = ExtResource("1_vohc1")
+metadata/_custom_type_script = "uid://cb4cgpspw65ej"

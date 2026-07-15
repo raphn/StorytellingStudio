@@ -15,7 +15,7 @@ class_name ProjectData
 @export var character_id := 0
 
 ## Store character information under unique ID
-@export var characters: Array[CharacterData] = []
+@export var characters: Dictionary[int, CharacterData] = {}
 
 ## Increasing Scene ID numeration
 @export var scene_id := 0
@@ -27,6 +27,9 @@ class_name ProjectData
 # ============================ || LAYOUTS ............... || ================= #
 
 @export var print_settings : PrintingSettings
+
+@export var editing_zoom := 1.0
+@export var editing_scroll := Vector2.ZERO
 
 ## -9 = ID invalid
 ## -> -1 = Front Cover page number
@@ -49,21 +52,24 @@ signal finished_saving
 
 const PROJECTS_FOLDER := "user://projects"
 const META_NAME := "meta.tres"
+const SCENE_FOLDER_NAME := "scns"
 const CURRENT_DATA_VERSION := 2
 
 
 # =============== || SCENE MANAGEMENT .......... || ========================== #
 
 ## Create new CharacterData, await saving amd returns the id of the new character
-func create_new_character_and_save() -> int:
+func create_new_character_and_save() -> CharacterData:
 	var curr_id := character_id
 	character_id += 1
 	
-	characters.set(character_id, CharacterData.new())
-	save()
+	var n_char := CharacterData.new()
+	n_char.ID = curr_id
+	n_char.model_id = &"Rigger"
+	characters.set(curr_id, n_char)
 	
-	await finished_saving
-	return curr_id
+	save_modifications()
+	return n_char
 
 ## Create new SceneData, await saving amd returns the id of the new scene
 func create_new_scene_and_save() -> int:
@@ -75,6 +81,19 @@ func create_new_scene_and_save() -> int:
 	
 	save_modifications()
 	return curr_id
+
+
+# =============== || DATA VERSION MANAGEMEN .... || ========================== #
+
+## Updates the data model on old saved data
+func check_update_data_model() -> void:
+	if data_version == CURRENT_DATA_VERSION:
+		return;
+	
+	if not page_layouts:
+		_initialize_pages()
+	
+	data_version = CURRENT_DATA_VERSION
 
 
 # =============== || PAGE MANAGEMENT ........... || ========================== #
@@ -120,6 +139,22 @@ func get_previus_page(from_page:int) -> int:
 		if p < from_page:
 			return p
 	return -1
+
+
+# =============== || FRAME SHOTS & SCENES ...... || ========================== #
+
+## Returns the folder used to store rendered images for one scene pose frame.
+## id_of_scene: SceneData.ID for the working scene.
+## id_of_pose_frame: pose frame index from SceneData.current_frame / actor_keyframes key.
+## Returns: user:// path and creates all missing directories before returning it.
+static func get_frame_folder_path(id_of_scene:int, id_of_pose_frame:int) -> String:
+	var scene_folder := str(id_of_scene).lpad(32, "0")
+	var pose_frame_folder := str(id_of_pose_frame).lpad(32, "0")
+	
+	var frame_folder := "%s/%s/%s/fr_%s" % [PROJECTS_FOLDER, SCENE_FOLDER_NAME, scene_folder, pose_frame_folder]
+	Utils.ensure_folder(frame_folder)
+	
+	return frame_folder + "/"
 
 
 # =============== || SAVE & LOAD ............... || ========================== #
@@ -212,16 +247,6 @@ func _initialize_pages() -> void:
 	
 	# Back of the front cover on left (page 1 in right)
 	page_number_opened_on_the_left = 0
-
-## Updates the data model on old saved data
-func check_update_data_model() -> void:
-	if data_version == CURRENT_DATA_VERSION:
-		return;
-	
-	if not page_layouts:
-		_initialize_pages()
-	
-	data_version = CURRENT_DATA_VERSION
 
 ## Returns all currently existig projects
 static func get_projects() -> Array[ProjectMetaData]:

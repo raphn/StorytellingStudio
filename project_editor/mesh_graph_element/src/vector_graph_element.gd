@@ -107,10 +107,7 @@ func _ready() -> void:
 	add_theme_icon_override(&"resizer", VecGraphIcons.get_resize_diagonal_left())
 	_configure_graph_element_signals()
 	_set_vertices(vertices, false)
-	
-	var panel := TextureRect.new()
-	panel.mouse_filter = Control.MOUSE_FILTER_PASS
-	add_child(panel)
+	_create_content_selector()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
@@ -286,6 +283,12 @@ static func create_from(data:VectorGraphData, with_parent:GraphEdit, controller:
 
 
 # ============================================================================== CLASS BODY
+
+func _create_content_selector() -> void:
+	var panel := TextureRect.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_PASS
+	add_child(panel)
+
 
 func reset_shape(side := 160.0) -> void:
 	var before := _make_history_snapshot()

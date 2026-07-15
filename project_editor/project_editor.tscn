@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://jn1s6o5fyco6" path="res://graphs/page_layouts/layout3.png" id="9_2i0ud"]
 [ext_resource type="FontFile" uid="uid://b0qvvk7hd7an1" path="res://_project/fonts/Bangers-Regular.ttf" id="9_xc0si"]
 [ext_resource type="Texture2D" uid="uid://dgh3yqufiu68q" path="res://graphs/drop_arrow.png" id="9_ynxaj"]
+[ext_resource type="Script" uid="uid://3t1fkf8aj81d" path="res://src/proportional_center_container.gd" id="11_xc0si"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58rt0"]
 bg_color = Color(0.1342, 0.14992999, 0.22, 0.5882353)
@@ -21,7 +22,7 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.38431373, 0.4, 0.8509804, 1)
+border_color = Color(0.22352941, 0.6627451, 0.8392157, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -130,10 +131,9 @@ text = "Recenter"
 
 [node name="HomeButton" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1272285538]
 layout_mode = 2
-theme_type_variation = &"ActionButton"
 text = "<-Home"
 
-[node name="GraphEdit" type="GraphEdit" parent="MainContainer/MarginContainer/VBoxContainer" unique_id=1985515512 node_paths=PackedStringArray("floating_toolbar", "zoom_slider")]
+[node name="GraphEdit" type="GraphEdit" parent="MainContainer/MarginContainer/VBoxContainer" unique_id=1985515512 node_paths=PackedStringArray("zoom_slider", "floating_toolbar", "frame_picker_win")]
 layout_mode = 2
 size_flags_vertical = 3
 minimap_enabled = false
@@ -143,8 +143,9 @@ show_grid_buttons = false
 show_minimap_button = false
 show_arrange_button = false
 script = ExtResource("2_fjaqj")
-floating_toolbar = NodePath("FloatingToolbar")
 zoom_slider = NodePath("ZoomContainer/MarginContainer/VBoxContainer/ZoomVSlider")
+floating_toolbar = NodePath("FloatingToolbar")
+frame_picker_win = NodePath("../../AvailableFrameList")
 
 [node name="RightPage" type="GraphElement" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=189571889]
 layout_mode = 0
@@ -217,6 +218,8 @@ action_down = &"pan_down"
 visible = false
 z_index = 1
 layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
 offset_right = 3591.9995
 offset_bottom = 3316.0
 
@@ -376,7 +379,6 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_vertical = 4
-theme_type_variation = &"ActionButton"
 text = "New"
 
 [node name="SettingsFoldable" type="FoldableContainer" parent="MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer" unique_id=1801007548]
@@ -412,6 +414,44 @@ max_lines_visible = 30
 [node name="Button" type="Button" parent="MainContainer/MarginContainer/VBoxContainer/MobileDebug/VBoxContainer" unique_id=106859757]
 layout_mode = 2
 text = "copy"
+
+[node name="AvailableFrameList" type="PanelContainer" parent="MainContainer/MarginContainer" unique_id=1118293413]
+visible = false
+z_index = 10
+layout_mode = 2
+
+[node name="ProportionalCenterContainer" type="Container" parent="MainContainer/MarginContainer/AvailableFrameList" unique_id=720663525]
+layout_mode = 2
+script = ExtResource("11_xc0si")
+horizontal_fill = 0.8
+vertical_fill = 0.8
+metadata/_custom_type_script = "uid://3t1fkf8aj81d"
+
+[node name="PanelContainer" type="PanelContainer" parent="MainContainer/MarginContainer/AvailableFrameList/ProportionalCenterContainer" unique_id=468197768]
+layout_mode = 2
+theme_type_variation = &"MenuPanelContainer"
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/MarginContainer/AvailableFrameList/ProportionalCenterContainer/PanelContainer" unique_id=1682880476]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/MarginContainer/AvailableFrameList/ProportionalCenterContainer/PanelContainer/MarginContainer" unique_id=106391769]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainContainer/MarginContainer/AvailableFrameList/ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1100739246]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 0
+
+[node name="PickableFramesRoot" type="GridContainer" parent="MainContainer/MarginContainer/AvailableFrameList/ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=79571553]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/v_separation = 12
+columns = 4
+
+[node name="ClosePickerButton" type="Button" parent="MainContainer/MarginContainer/AvailableFrameList/ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1166276509]
+layout_mode = 2
+text = "Close"
 
 [node name="SaveTimer" type="Timer" parent="MainContainer" unique_id=1703339914]
 wait_time = 2.0
