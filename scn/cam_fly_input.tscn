@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dp30kfm1m3j53"]
+
+[ext_resource type="Script" uid="uid://crmyw84ws7x2i" path="res://src/cam_fly.gd" id="1_buntg"]
+[ext_resource type="Texture2D" uid="uid://c6vtvwhuw15bd" path="res://graphs/up down.png" id="2_huois"]
+
+[node name="CamFlyInput" type="VSlider" unique_id=1337554593]
+custom_minimum_size = Vector2(32, 224)
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 41.0
+offset_bottom = 232.0
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+script = ExtResource("1_buntg")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1241667636]
+modulate = Color(1, 1, 1, 0.57254905)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -129.0
+offset_right = 42.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_huois")
+expand_mode = 1

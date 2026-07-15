@@ -2,11 +2,12 @@ extends Camera3D
 class_name SelfControlledCamera3D
 
 @export_category("Input")
-@export var move_action_name := "cam_move"
-@export var look_action_name := "cam_look"
+@export var move_action_name		:= "cam_move"
+@export var look_action_name		:= "cam_look"
+@export var action_move_vertical	:= "main_cam_vertical"
 
 @export_category("Movement")
-@export var move_speed := 5.0
+@export var move_speed := 1.0
 
 @export_category("Camera Look")
 @export var look_speed := 90.0
@@ -36,58 +37,64 @@ func _process(delta: float) -> void:
 
 
 func _process_movement(delta: float) -> void:
-	var input := _get_directional_input(move_actions)
-
-	if input.is_zero_approx():
+	var move_input := _get_directional_input(move_actions)
+	var vertical_input := _get_vertical_input()
+	
+	if move_input.is_zero_approx() and is_zero_approx(vertical_input):
 		return
-
+	
 	# Camera-local movement:
 	# X = right/left
-	# Y = up/down
 	# Z = forward/backward
-	var direction := (
-		global_basis.x * input.x
-		+ global_basis.y * input.y
-		- global_basis.z * input.z
-	).normalized()
-
-	global_position += direction * move_speed * delta
+	var right := global_basis.x
+	right.y = 0.0
+	right = right.normalized()
+	
+	var forward := -global_basis.z
+	forward.y = 0.0
+	forward = forward.normalized()
+	
+	var velocity := Vector3(0.0, vertical_input, 0.0)
+	var horizontal_direction := right * move_input.x + forward * move_input.z
+	
+	if not horizontal_direction.is_zero_approx():
+		velocity += horizontal_direction.normalized()
+	
+	global_position += velocity * move_speed * delta
 
 
 func _process_look(delta: float) -> void:
 	var input := _get_directional_input(look_actions)
-
+	
 	if input.is_zero_approx():
 		return
-
+	
 	var look_radians := deg_to_rad(look_speed) * delta
-
+	
 	_yaw -= input.x * look_radians
-	_pitch += input.y * look_radians
-
+	_pitch += input.z * look_radians
+	
 	var max_pitch := deg_to_rad(max_pitch_degrees)
 	_pitch = clampf(_pitch, -max_pitch, max_pitch)
-
+	
 	# Keeping yaw and pitch separate avoids accumulating Euler rotations
 	# and prevents the camera from rolling.
 	rotation = Vector3(_pitch, _yaw, 0.0)
 
-
 func _get_directional_input(actions: Array[StringName]) -> Vector3:
-	return Vector3(
-		Input.get_action_strength(actions[3])
-			- Input.get_action_strength(actions[2]),
-		Input.get_action_strength(actions[0])
-			- Input.get_action_strength(actions[1]),
-		Input.get_action_strength(actions[0])
-			- Input.get_action_strength(actions[1])
-	)
+	var dir_input := Input.get_vector(actions[3], actions[2], actions[0], actions[1])
+	return Vector3(dir_input.x, 0.0, dir_input.y) if dir_input else Vector3.ZERO
 
+func _get_vertical_input() -> float:
+	return Input.get_axis(
+		StringName(action_move_vertical + "_down"),
+		StringName(action_move_vertical + "_up")
+	)
 
 func _create_directional_actions(base_name: String) -> Array[StringName]:
 	return [
-		StringName(base_name + "_up"),
 		StringName(base_name + "_down"),
-		StringName(base_name + "_left"),
+		StringName(base_name + "_up"),
 		StringName(base_name + "_right"),
+		StringName(base_name + "_left"),
 	]

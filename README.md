@@ -1,6 +1,6 @@
-# Comics-I did
+# Frame Forge: Storytelling Studio
 
-Comics-I did is a Godot 4 project for an Android-tablet-first comic staging app. The app is being built around a practical workflow: create a comic project, stage simple 3D characters and objects, capture camera-based comic frames, and arrange those frames into printable page layouts.
+Frame Forge: Storytelling Studio is a Godot 4 project for an Android-tablet-first comic staging app. The app is built around a practical workflow: create a comic project, stage simple 3D characters and objects, capture camera-based comic frames, and arrange those frames into printable page layouts.
 
 This repository is published so people can inspect the implementation, learn from the architecture, and understand how the app is being built. It is not an open-source project and it is not a grant of commercial reuse rights. See [LICENSE](LICENSE) for the exact terms.
 
@@ -14,6 +14,10 @@ This repository is published so people can inspect the implementation, learn fro
 
 ## Current Status
 
+The alpha feature set is complete and ready for testing. The project now has the core end-to-end workflow in place: project creation, scene creation, character staging, pose/keyframe storage, camera shot capture, frame selection, page layout editing, and saved project migration.
+
+Alpha testing should focus on reliability, usability, and saved-data behavior rather than expecting every final production feature or polished visual asset to be finished.
+
 Implemented areas include:
 
 - App shell with loading screen, home screen, project creation, and recent project picking.
@@ -22,10 +26,25 @@ Implemented areas include:
 - Scene editor pieces for character management, actor thumbnails, camera controls, minimap-style feedback, and scene picking.
 - Runtime actor catalog under `runtime_assets`.
 - Character poser foundations, including runtime rig building, transform handles, keyframe capture/apply resources, camera shot storage, and frame character data.
-- Vector graph/page layout tooling used by the project editor for draggable, resizable, editable page elements.
+- Frame shot picker support for placing captured scene images into page layout frames.
+- Vector graph/page layout tooling used by the project editor for draggable, resizable, editable page elements with stored frame image paths.
+- Responsive scene editor layout behavior for portrait and landscape tablet orientations.
+- Touch camera controls for movement, look, and vertical fly movement.
 - A lightweight headless validation script for runtime rig/keyframe behavior.
 
-The project is still in active development. Some systems are prototypes or evolving editor workflows, and some filenames still preserve earlier spelling or naming decisions.
+The project is still in active development after alpha. Some systems are expected to change through testing feedback, and some filenames still preserve earlier spelling or naming decisions.
+
+## Latest Project Alterations Checked
+
+As of July 15, 2026, the latest staged project alterations include:
+
+- Frame picker integration in the project editor, including available captured-frame thumbnails and selected-frame feedback.
+- Page frame data persistence for selected frame image paths.
+- Project data migration updated to data version 3, including cleanup/defaulting for characters, scenes, scene frames, rig keyframes, layouts, and metadata.
+- Scene editor orientation handling so the main editing panels can switch between portrait and landscape arrangements.
+- Camera movement updates, including horizontal ground-plane movement and separate vertical fly controls.
+- New `CamFlyInput` UI scene and supporting script for vertical camera movement on touch devices.
+- Updated UI/image assets used by camera and graph controls.
 
 ## Repository Layout
 

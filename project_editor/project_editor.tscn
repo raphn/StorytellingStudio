@@ -46,7 +46,7 @@ stacked_outline_count = 1
 stacked_outline_0/size = 8
 stacked_outline_0/color = Color(0.1092, 0.11422666, 0.26, 1)
 
-[node name="ProjectEditor" type="Control" unique_id=352194153 node_paths=PackedStringArray("notif_bar", "home_btn", "recenter_btn", "save_timer", "no_scene_sigh", "scenes_scroll", "scenes_root", "add_scene_btn", "graph", "left_page", "right_page", "left_page_container", "right_page_container", "flip_back_btn", "flip_forward_btn", "add_forward_btn")]
+[node name="ProjectEditor" type="Control" unique_id=352194153 node_paths=PackedStringArray("notif_bar", "home_btn", "recenter_btn", "save_timer", "frame_pick_window", "frames_root", "no_scene_sigh", "scenes_scroll", "scenes_root", "add_scene_btn", "graph", "left_page", "right_page", "left_page_container", "right_page_container", "flip_back_btn", "flip_forward_btn", "add_forward_btn")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,6 +58,8 @@ notif_bar = NodePath("MainContainer/MarginContainer/VBoxContainer/PanelContainer
 home_btn = NodePath("MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HomeButton")
 recenter_btn = NodePath("MainContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/RecenterButton")
 save_timer = NodePath("MainContainer/SaveTimer")
+frame_pick_window = NodePath("MainContainer/MarginContainer/AvailableFrameList")
+frames_root = NodePath("MainContainer/MarginContainer/AvailableFrameList/ProportionalCenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/PickableFramesRoot")
 no_scene_sigh = NodePath("MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer/NoScenesSign")
 scenes_scroll = NodePath("MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer/ScenesScrollContainer")
 scenes_root = NodePath("MainContainer/MarginContainer/VBoxContainer/ToolsFoldable/MarginContainer/VBoxContainer/ScenesFoldable/HBoxContainer/ScenesScrollContainer/ScenePickersRoot")
@@ -133,7 +135,7 @@ text = "Recenter"
 layout_mode = 2
 text = "<-Home"
 
-[node name="GraphEdit" type="GraphEdit" parent="MainContainer/MarginContainer/VBoxContainer" unique_id=1985515512 node_paths=PackedStringArray("zoom_slider", "floating_toolbar", "frame_picker_win")]
+[node name="GraphEdit" type="GraphEdit" parent="MainContainer/MarginContainer/VBoxContainer" unique_id=1985515512 node_paths=PackedStringArray("zoom_slider", "floating_toolbar")]
 layout_mode = 2
 size_flags_vertical = 3
 minimap_enabled = false
@@ -145,7 +147,6 @@ show_arrange_button = false
 script = ExtResource("2_fjaqj")
 zoom_slider = NodePath("ZoomContainer/MarginContainer/VBoxContainer/ZoomVSlider")
 floating_toolbar = NodePath("FloatingToolbar")
-frame_picker_win = NodePath("../../AvailableFrameList")
 
 [node name="RightPage" type="GraphElement" parent="MainContainer/MarginContainer/VBoxContainer/GraphEdit" unique_id=189571889]
 layout_mode = 0
@@ -203,10 +204,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -83.0
-offset_top = -19.5
-offset_right = -43.0
-offset_bottom = 20.5
+offset_left = -175.0
+offset_top = -361.0
+offset_right = -135.0
+offset_bottom = -321.0
 grow_horizontal = 0
 grow_vertical = 2
 action_left = &"pan_left"

@@ -97,17 +97,22 @@ var _resize_drag_start_size := Vector2.ZERO
 var _resize_drag_start_position_offset := Vector2.ZERO
 var _resize_drag_start_bounds := Rect2()
 var _resize_drag_start_vertices: Array[VectorGraphVertex] = []
+var frame_path := ""
+var _texture_container : TextureRect
 
 
 # ============================================================================== CALLBACKS
 
 func _ready() -> void:
 	clip_contents = false
+	clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 	resizable = true
+	
 	add_theme_icon_override(&"resizer", VecGraphIcons.get_resize_diagonal_left())
+	
 	_configure_graph_element_signals()
 	_set_vertices(vertices, false)
-	_create_content_selector()
+	_create_frame_shot_container()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
@@ -278,16 +283,40 @@ static func create_from(data:VectorGraphData, with_parent:GraphEdit, controller:
 	n_vec.in_handle_gizmo_modulate = data.in_handle_gizmo_modulate
 	n_vec.out_handle_gizmo_modulate = data.out_handle_gizmo_modulate
 	n_vec.handle_line_color = data.handle_line_color
+	n_vec.set_frame_shot(data.frame_path, false)
 	
 	n_vec.something_changed.connect(func(): controller.set_dirty())
 
 
 # ============================================================================== CLASS BODY
 
-func _create_content_selector() -> void:
-	var panel := TextureRect.new()
-	panel.mouse_filter = Control.MOUSE_FILTER_PASS
-	add_child(panel)
+func _create_frame_shot_container() -> void:
+	_texture_container = TextureRect.new()
+	_texture_container.name = "FrameShotTexture"
+	_texture_container.show_behind_parent = true
+	
+	_texture_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_texture_container.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_texture_container.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_texture_container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	
+	add_child(_texture_container)
+	_sync_texture_container()
+
+func set_frame_shot(new_frame_path: String, push_undo := true) -> void:
+	if new_frame_path == frame_path:
+		return
+	
+	var before := _make_history_snapshot()
+	frame_path = new_frame_path
+	if _texture_container:
+		_texture_container.texture = _load_frame_texture(frame_path)
+		_sync_texture_container()
+	
+	if push_undo:
+		_push_undo_snapshot(before, "Set Frame Shot")
+	else:
+		something_changed.emit()
 
 
 func reset_shape(side := 160.0) -> void:
@@ -444,6 +473,7 @@ func _fit_rect_to_geometry() -> void:
 	)
 	custom_minimum_size = MIN_GRAPH_ELEMENT_SIZE
 	size = required_size
+	_sync_texture_container()
 
 func _on_resize_request(new_size: Vector2) -> void:
 	if not resizable:
@@ -990,6 +1020,7 @@ func _make_history_snapshot() -> Dictionary:
 	return {
 		"vertices": _copy_vertices(),
 		"position_offset": position_offset,
+		"frame_path": frame_path,
 		"visible_handles": _copy_visible_handle_indices(),
 	}
 
@@ -999,6 +1030,10 @@ func _apply_history_snapshot(snapshot: Dictionary) -> void:
 	_stop_skew_drag()
 	_cancel_long_press()
 	position_offset = snapshot.position_offset
+	frame_path = String(snapshot.get("frame_path", ""))
+	if _texture_container:
+		_texture_container.texture = _load_frame_texture(frame_path)
+		_sync_texture_container()
 	_vertices = _copy_vertices_from(snapshot.vertices)
 	_vertices_with_visible_handles = _visible_handle_dictionary_from(snapshot.visible_handles)
 	_trim_visible_handle_state()
@@ -1029,6 +1064,8 @@ func _copy_vertices_from(source_vertices: Array) -> Array[VectorGraphVertex]:
 
 func _snapshots_match(a: Dictionary, b: Dictionary) -> bool:
 	if a.position_offset != b.position_offset:
+		return false
+	if String(a.get("frame_path", "")) != String(b.get("frame_path", "")):
 		return false
 	var a_vertices: Array = a.vertices
 	var b_vertices: Array = b.vertices
@@ -1071,6 +1108,32 @@ func _copy_vertices() -> Array[VectorGraphVertex]:
 	for vertex in _vertices:
 		next_vertices.append(vertex.copy())
 	return next_vertices
+
+func _sync_texture_container() -> void:
+	if not _texture_container:
+		return
+	
+	_texture_container.position = Vector2.ZERO
+	_texture_container.size = size
+	_texture_container.visible = _texture_container.texture != null
+
+func _load_frame_texture(path: String) -> Texture2D:
+	if path.is_empty():
+		return null
+	
+	if path.begins_with("res://"):
+		return load(path) as Texture2D
+	
+	if not FileAccess.file_exists(path):
+		return null
+	
+	var image := Image.new()
+	var err := image.load(path)
+	if err != OK:
+		printerr("Could not load frame shot '%s': %s" % [path, error_string(err)])
+		return null
+	
+	return ImageTexture.create_from_image(image)
 
 func _debug_gizmo(message: String) -> void:
 	if debug_gizmo_render:

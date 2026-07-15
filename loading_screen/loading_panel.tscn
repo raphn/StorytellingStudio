@@ -45,7 +45,7 @@ bar = NodePath("HSlider")
 layout_mode = 2
 texture = ExtResource("1_l43a5")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="HSlider" type="HSlider" parent="." unique_id=288087832]
 custom_minimum_size = Vector2(384, 64)

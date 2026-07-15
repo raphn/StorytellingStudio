@@ -9,6 +9,10 @@ enum PageType { FrontCover, First, Middle, Last, BackCover, NONE }
 @export var recenter_btn: Button
 @export var save_timer	: Timer
 
+@export_category("Frame Shots")
+@export var frame_pick_window : PanelContainer
+@export var frames_root : GridContainer
+
 @export_category("Scenes foldable")
 @export var no_scene_sigh	: Label
 @export var scenes_scroll	: ScrollContainer
@@ -36,12 +40,15 @@ var _r_flip_container : GraphElement
 var _l_flip_container : GraphElement
 var _add_page_container : GraphElement
 var _page_type : PageType = PageType.NONE
+var _frame_picker_target : VectorGraphElementRuntime
 
 ## The page ID of the left PagePanel
 var opened_page_number := -9
 var opened_page_layout : LayoutData
 
 const SCENE_PICKER_CONTAINER = preload("uid://b21gwhrp7l2so")
+const PICKABLE_FRAME = preload("res://project_editor/scn/pickable_frame.tscn")
+const EMPTY_FRAME_PATH := "res://graphs/empty.png"
 
 signal finished_opening_project
 
@@ -68,6 +75,11 @@ func _connect_event_listeners() -> void:
 	add_forward_btn.pressed.connect(_add_new_page)
 	
 	recenter_btn.pressed.connect(graph.recenter)
+	graph.floating_toolbar.display_frame_picker.connect(_show_frame_picker)
+	
+	var close_picker_btn := frame_pick_window.find_child("ClosePickerButton", true, false) as Button
+	if close_picker_btn:
+		close_picker_btn.pressed.connect(_close_frame_picker)
 
 
 # =========================== || EDITING .............. || =================== #
@@ -90,6 +102,7 @@ func open(proj:ProjectData) -> void:
 		print_debug("Adding picker for scene ID '" + str(id) + "'")
 		_create_scene_picker(editing.scenes.get(id), id)
 	
+	_load_frame_picker_options()
 	
 	# Resize the page to the correct metrics
 	_configure_grid_to_unit()
@@ -120,6 +133,116 @@ func set_dirty() -> void:
 	save_timer.start()
 	
 	_set_notification_bar(false)
+
+
+# =========================== || FRAME PICKER
+
+func _load_frame_picker_options() -> void:
+	for child in frames_root.get_children():
+		frames_root.remove_child(child)
+		child.queue_free()
+	
+	_add_pickable_frame(EMPTY_FRAME_PATH)
+	
+	for thumbnail_path in _get_frame_thumbnail_paths():
+		_add_pickable_frame(thumbnail_path)
+	
+	_refresh_frame_picker_feedback()
+
+func _get_frame_thumbnail_paths() -> Array[String]:
+	var thumbnail_paths: Array[String] = []
+	var seen_paths := {}
+	if editing == null:
+		return thumbnail_paths
+	
+	for scene_id in editing.scenes.keys():
+		var scene := editing.scenes.get(scene_id) as SceneData
+		if scene == null:
+			continue
+		
+		var folder_scene_ids := _get_frame_folder_scene_ids(scene, int(scene_id))
+		for pose_frame_index in scene.get_pose_frame_indices():
+			for folder_scene_id in folder_scene_ids:
+				var frame_folder := ProjectData.get_frame_folder_path(folder_scene_id, int(pose_frame_index))
+				for file_name in DirAccess.get_files_at(frame_folder):
+					if file_name.ends_with("_thumb.png"):
+						var thumbnail_path := frame_folder + file_name
+						if not seen_paths.has(thumbnail_path):
+							thumbnail_paths.append(thumbnail_path)
+							seen_paths[thumbnail_path] = true
+	
+	thumbnail_paths.sort()
+	return thumbnail_paths
+
+func _add_pickable_frame(frame_path: String) -> void:
+	var pickable := PICKABLE_FRAME.instantiate() as PickableFrame
+	frames_root.add_child(pickable)
+	pickable.setup_from(frame_path)
+	pickable.picked.connect(_frame_picker_selected)
+
+func _get_frame_folder_scene_ids(scene: SceneData, scene_key: int) -> Array[int]:
+	var ids: Array[int] = []
+	if scene.ID >= 0:
+		ids.append(scene.ID)
+	elif scene.ID == -1:
+		ids.append(scene.ID)
+	
+	if ids.find(scene_key) < 0:
+		ids.append(scene_key)
+	if ids.find(-1) < 0:
+		ids.append(-1)
+	return ids
+
+func _show_frame_picker() -> void:
+	_frame_picker_target = graph.get_frame_picker_target()
+	if _frame_picker_target == null:
+		return
+	
+	_refresh_frame_picker_feedback()
+	frame_pick_window.visible = true
+
+func _refresh_frame_picker_feedback() -> void:
+	var selected_path := ""
+	var target := _get_frame_picker_target()
+	if target:
+		selected_path = target.frame_path
+	
+	for child in frames_root.get_children():
+		if child is PickableFrame:
+			var pickable := child as PickableFrame
+			pickable.set_in_use(pickable.frame_path == selected_path)
+
+func _frame_picker_selected(pickable: PickableFrame) -> void:
+	var target := _get_frame_picker_target()
+	
+	if target == null:
+		_close_frame_picker(false)
+		return
+	
+	target.set_frame_shot(pickable.frame_path)
+	_close_frame_picker()
+	_refresh_frame_picker_feedback()
+
+func _get_frame_picker_target() -> VectorGraphElementRuntime:
+	if _frame_picker_target and is_instance_valid(_frame_picker_target):
+		return _frame_picker_target
+	if graph:
+		return graph.get_frame_picker_target()
+	return null
+
+func _close_frame_picker(restore_selection := true) -> void:
+	frame_pick_window.visible = false
+	if restore_selection:
+		_restore_frame_picker_selection()
+
+func _restore_frame_picker_selection() -> void:
+	var target := _get_frame_picker_target()
+	if target == null:
+		return
+	
+	if graph.frame_selected != target:
+		target.set_selected(true)
+	graph.frame_selection_anchor = target
 
 
 # =========================== || HELPERS

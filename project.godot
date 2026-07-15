@@ -132,6 +132,22 @@ sec_cam_look_left={
 "deadzone": 0.0,
 "events": []
 }
+main_cam_vertical_up={
+"deadzone": 0.0,
+"events": []
+}
+main_cam_vertical_down={
+"deadzone": 0.0,
+"events": []
+}
+sec_cam_move_vertical_up={
+"deadzone": 0.0,
+"events": []
+}
+sec_cam_move_vertical_down={
+"deadzone": 0.0,
+"events": []
+}
 
 [input_devices]
 

@@ -53,7 +53,7 @@ signal finished_saving
 const PROJECTS_FOLDER := "user://projects"
 const META_NAME := "meta.tres"
 const SCENE_FOLDER_NAME := "scns"
-const CURRENT_DATA_VERSION := 2
+const CURRENT_DATA_VERSION := 3
 
 
 # =============== || SCENE MANAGEMENT .......... || ========================== #
@@ -76,7 +76,9 @@ func create_new_scene_and_save() -> int:
 	var curr_id := scene_id
 	scene_id += 1
 	
-	scenes.set(curr_id, SceneData.new())
+	var scene := SceneData.new()
+	scene.ID = curr_id
+	scenes.set(curr_id, scene)
 	print_debug("New scene data created with id: '", curr_id, "'\n\t>>> ", scenes.get(curr_id))
 	
 	save_modifications()
@@ -87,13 +89,229 @@ func create_new_scene_and_save() -> int:
 
 ## Updates the data model on old saved data
 func check_update_data_model() -> void:
-	if data_version == CURRENT_DATA_VERSION:
-		return;
+	if characters == null:
+		characters = {}
+	if scenes == null:
+		scenes = {}
+	if page_layouts == null:
+		page_layouts = {}
+	if settings == null:
+		settings = {}
+	if print_settings == null:
+		print_settings = PrintingSettings.new()
 	
-	if not page_layouts:
-		_initialize_pages()
+	_check_update_characters()
+	_check_update_scenes()
+	_check_update_layouts()
 	
 	data_version = CURRENT_DATA_VERSION
+	_verify_meta()
+
+func _check_update_characters() -> void:
+	var updated_characters: Dictionary[int, CharacterData] = {}
+	var highest_character_id := -1
+	
+	for id in characters.keys():
+		var character_id_key := int(id)
+		var character := characters.get(id) as CharacterData
+		if character == null:
+			character = CharacterData.new()
+		
+		if character.ID < 0:
+			character.ID = character_id_key
+		if character.model_id == &"":
+			character.model_id = &"Rigger"
+		if character.display_name == "":
+			character.display_name = "Character"
+		if character.linked_scenes < 0:
+			character.linked_scenes = 0
+		
+		highest_character_id = maxi(highest_character_id, character_id_key)
+		highest_character_id = maxi(highest_character_id, character.ID)
+		updated_characters[character_id_key] = character
+	
+	characters = updated_characters
+	character_id = maxi(character_id, highest_character_id + 1)
+
+func _check_update_scenes() -> void:
+	var updated_scenes: Dictionary[int, SceneData] = {}
+	var highest_scene_id := -1
+	
+	for id in scenes.keys():
+		var scene_id_key := int(id)
+		var scene := scenes.get(id) as SceneData
+		if scene == null:
+			scene = SceneData.new()
+		
+		if scene.ID < 0:
+			scene.ID = scene_id_key
+		
+		_check_update_scene(scene)
+		highest_scene_id = maxi(highest_scene_id, scene_id_key)
+		highest_scene_id = maxi(highest_scene_id, scene.ID)
+		updated_scenes[scene_id_key] = scene
+	
+	scenes = updated_scenes
+	scene_id = maxi(scene_id, highest_scene_id + 1)
+
+func _check_update_scene(scene: SceneData) -> void:
+	if scene.actors == null:
+		scene.actors = PackedByteArray()
+	if scene.actor_keyframes == null:
+		scene.actor_keyframes = {}
+	if scene.current_frame < -1:
+		scene.current_frame = -1
+	
+	var clean_actors := PackedByteArray()
+	for character_id_value in scene.actors:
+		var actor_id := int(character_id_value)
+		if actor_id < 0 or clean_actors.find(actor_id) >= 0:
+			continue
+		clean_actors.append(actor_id)
+	scene.actors = clean_actors
+	
+	var updated_keyframes: Dictionary[int, SceneFrame] = {}
+	for frame_id in scene.actor_keyframes.keys():
+		var frame_key := int(frame_id)
+		if frame_key < 0:
+			continue
+		
+		var frame := scene.actor_keyframes.get(frame_id) as SceneFrame
+		if frame == null:
+			frame = SceneFrame.new()
+		
+		_check_update_scene_frame(frame)
+		updated_keyframes[frame_key] = frame
+	
+	scene.actor_keyframes = updated_keyframes
+	if scene.current_frame >= 0:
+		scene.ensure_scene_frame(scene.current_frame)
+
+func _check_update_scene_frame(frame: SceneFrame) -> void:
+	if frame.character_keyframes == null:
+		frame.character_keyframes = {}
+	
+	var updated_character_keyframes: Dictionary[int, RigKeyframe] = {}
+	for character_id_key in frame.character_keyframes.keys():
+		var character_key := int(character_id_key)
+		if character_key < 0:
+			continue
+		
+		var keyframe := frame.character_keyframes.get(character_id_key) as RigKeyframe
+		if keyframe == null:
+			keyframe = RigKeyframe.new()
+		
+		_check_update_rig_keyframe(keyframe)
+		updated_character_keyframes[character_key] = keyframe
+		frame.character_id = character_key
+	
+	frame.character_keyframes = updated_character_keyframes
+
+func _check_update_rig_keyframe(keyframe: RigKeyframe) -> void:
+	if keyframe.handle_transforms == null:
+		keyframe.handle_transforms = {}
+	if keyframe.frame_shots == null:
+		keyframe.frame_shots = []
+	
+	var updated_transforms: Dictionary[StringName, Transform3D] = {}
+	for handle_key in keyframe.handle_transforms.keys():
+		updated_transforms[StringName(str(handle_key))] = keyframe.handle_transforms[handle_key]
+	keyframe.handle_transforms = updated_transforms
+	
+	if keyframe.frame_shots.is_empty():
+		keyframe.current_frame_shot = -1
+	else:
+		keyframe.current_frame_shot = clampi(keyframe.current_frame_shot, 0, keyframe.frame_shots.size() - 1)
+
+func _check_update_layouts() -> void:
+	if front_cover == null:
+		front_cover = LayoutData.new()
+	if back_cover == null:
+		back_cover = LayoutData.new()
+	
+	_check_update_layout(front_cover)
+	_check_update_layout(back_cover)
+	
+	if page_layouts.is_empty():
+		_initialize_pages()
+		_check_update_layout(front_cover)
+		_check_update_layout(back_cover)
+	
+	var updated_page_layouts: Dictionary[int, LayoutData] = {}
+	var highest_page := -1
+	for page_key in page_layouts.keys():
+		var page_number := int(page_key)
+		var layout := page_layouts.get(page_key) as LayoutData
+		if layout == null:
+			layout = LayoutData.new()
+		
+		_check_update_layout(layout)
+		highest_page = maxi(highest_page, page_number)
+		updated_page_layouts[page_number] = layout
+	
+	page_layouts = updated_page_layouts
+	last_added_page = maxi(last_added_page, highest_page)
+	
+	if page_number_opened_on_the_left == -9:
+		page_number_opened_on_the_left = 0
+
+func _check_update_layout(layout: LayoutData) -> void:
+	if layout.frames == null:
+		layout.frames = []
+	
+	var updated_frames: Array[VectorGraphData] = []
+	for frame in layout.frames:
+		var graph_data := frame as VectorGraphData
+		if graph_data == null:
+			continue
+		
+		_check_update_vector_graph_data(graph_data)
+		updated_frames.append(graph_data)
+	
+	layout.frames = updated_frames
+
+func _check_update_vector_graph_data(graph_data: VectorGraphData) -> void:
+	if graph_data.vertices == null:
+		graph_data.vertices = []
+	
+	var updated_vertices: Array[VectorGraphVertex] = []
+	for vertex in graph_data.vertices:
+		var graph_vertex := vertex as VectorGraphVertex
+		if graph_vertex == null:
+			graph_vertex = VectorGraphVertex.new()
+		updated_vertices.append(graph_vertex)
+	
+	graph_data.vertices = VectorPathGeometry.sanitize_vertices(updated_vertices)
+	graph_data.curve_segments_per_edge = maxi(graph_data.curve_segments_per_edge, 1)
+	graph_data.size = graph_data.size.max(Vector2(8, 8))
+	graph_data.custom_minimum_size = graph_data.custom_minimum_size.max(Vector2.ZERO)
+	graph_data.outline_width = maxf(graph_data.outline_width, 0.0)
+
+func _verify_meta() -> void:
+	if ID < 0:
+		return
+	
+	var this_proj_folder := str(ID).lpad(32, "0")
+	var full_proj_folder_path := PROJECTS_FOLDER + "/" + this_proj_folder
+	var proj_data_path := full_proj_folder_path + "/proj.tres"
+	var meta_data_path := full_proj_folder_path + "/" + META_NAME
+	
+	var should_save_meta := not FileAccess.file_exists(meta_data_path)
+	if not should_save_meta:
+		var meta := ResourceLoader.load(meta_data_path, "", ResourceLoader.CACHE_MODE_IGNORE) as ProjectMetaData
+		should_save_meta = (
+			meta == null
+			or meta.data_version != data_version
+			or meta.project_id != ID
+			or meta.display_name != display_name
+			or meta.created_unix_time != created_unix_time
+			or meta.modified_unix_time != modified_unix_time
+			or meta.proj_path != proj_data_path
+		)
+	
+	if should_save_meta:
+		Utils.ensure_folder(full_proj_folder_path)
+		ProjectMetaData.save_meta_of(self, proj_data_path, meta_data_path)
 
 
 # =============== || PAGE MANAGEMENT ........... || ========================== #

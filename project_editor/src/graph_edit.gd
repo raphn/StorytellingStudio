@@ -6,9 +6,9 @@ class_name DrawTable
 
 @export_category("FLoating Toolbar")
 @export var floating_toolbar : FloatingToolbar
-@export var frame_picker_win : PanelContainer
 
 var frame_selected :VectorGraphElementRuntime
+var frame_selection_anchor :VectorGraphElementRuntime
 
 var _touches: Dictionary[int, Vector2] = {}
 
@@ -62,6 +62,7 @@ func _node_selected(node:Node) -> void:
 		return
 	
 	frame_selected = node as VectorGraphElementRuntime
+	frame_selection_anchor = frame_selected
 	frame_selected.position_offset_changed.connect(_reposition_floating_toolbar)
 	frame_selected.node_deselected.connect(_selected_node_deselected.bind(node))
 	
@@ -78,9 +79,17 @@ func _selected_node_deselected(node:Node) -> void:
 		floating_toolbar.visible = false
 		frame_selected = null
 
+func get_frame_picker_target() -> VectorGraphElementRuntime:
+	if frame_selected and is_instance_valid(frame_selected):
+		return frame_selected
+	if frame_selection_anchor and is_instance_valid(frame_selection_anchor):
+		return frame_selection_anchor
+	return null
+
 
 func _force_deselect() -> void:
-	frame_selected.set_selected(false)
+	if frame_selected:
+		frame_selected.set_selected(false)
 
 func _copy_selected() -> void:
 	var n_element := VectorGraphElementRuntime.new()
@@ -103,6 +112,7 @@ func _copy_selected() -> void:
 	n_element.in_handle_gizmo_modulate = frame_selected.in_handle_gizmo_modulate
 	n_element.out_handle_gizmo_modulate = frame_selected.out_handle_gizmo_modulate
 	n_element.handle_line_color = frame_selected.handle_line_color
+	n_element.set_frame_shot(frame_selected.frame_path, false)
 	
 	frame_selected.set_selected(false)
 	n_element.set_selected(true)
@@ -116,6 +126,8 @@ func _delete_selected() -> void:
 	
 	remove_child(to_del)
 	to_del.queue_free()
+	if frame_selection_anchor == to_del:
+		frame_selection_anchor = null
 
 
 # ======================================== || NOTIFY EDITING FRAME ...... ||

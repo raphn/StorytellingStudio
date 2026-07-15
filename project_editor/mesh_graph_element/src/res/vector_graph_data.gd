@@ -30,6 +30,7 @@ static func from(vec_graph:VectorGraphElementRuntime) -> VectorGraphData:
 	n_dt.position_offset = vec_graph.position_offset
 	n_dt.size = vec_graph.size
 	n_dt.custom_minimum_size = vec_graph.custom_minimum_size
+	n_dt.frame_path = vec_graph.frame_path
 	n_dt.resizable = vec_graph.resizable
 	n_dt.draggable = vec_graph.draggable
 	n_dt.selectable = vec_graph.selectable

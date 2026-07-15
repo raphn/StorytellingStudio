@@ -12,6 +12,8 @@ class_name ComicSceneEditor
 ## Panel containing frame editing UI; hidden while the scene 3D editor is active.
 @export var frame_editor	: PanelContainer
 
+@export var box_container	: BoxContainer
+
 @export_category("Database")
 ## List of available actors (models)
 @export var actors : RuntimeActors
@@ -67,6 +69,8 @@ var editing		: SceneData
 ## All instantiated actors (Actor3D models)
 var instantiated_actors : Dictionary[int, Actor3D]
 
+var current_orientation : StringName
+
 ## Emitted after a scene is opened and linked characters have been restored.
 signal finished_open_scene
 
@@ -88,6 +92,32 @@ func _ready() -> void:
 	add_shot_frame_camera.pressed.connect(_add_frame_shot)
 	save_timer.timeout.connect(_save_modifications)
 	capture_snapshot.pressed.connect(_capture_save_frame_shot)
+	
+	get_viewport().size_changed.connect(_on_viewport_size_changed)
+	_update_orientation()
+
+
+# ======================= || ORIENTATION ....................|| ============== #
+func _on_viewport_size_changed() -> void:
+	# Wait until Android/Godot finishes updating the viewport.
+	await get_tree().process_frame
+	_update_orientation()
+
+func _update_orientation() -> void:
+	var size := get_viewport().get_visible_rect().size
+	
+	var new_orientation := (
+		&"LAND"
+		if size.x > size.y
+		else &"PORT"
+	)
+
+	if new_orientation == current_orientation:
+		return
+	
+	current_orientation = new_orientation
+	box_container.vertical = current_orientation == &"PORT"
+
 
 ## Opens a project scene for editing and restores linked actor instances.
 ## proj: ProjectData that contains the target scene and character definitions.
