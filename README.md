@@ -103,6 +103,8 @@ The project owner remains responsible for the code that is kept in this reposito
 
 This repository is source-available for inspection, learning, private study, and non-commercial evaluation only. Commercial use, redistribution, sublicensing, public hosting of copies, and production use are reserved unless a separate written agreement says otherwise.
 
+The app privacy policy is available in [PRIVACY_POLICY.md](PRIVACY_POLICY.md).
+
 Important boundaries:
 
 - The license for this repository's original code is in [LICENSE](LICENSE).
